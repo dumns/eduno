@@ -34,15 +34,15 @@
                     @if (Route::has('login'))
                         @auth
                             <x-ui.button href="{{ url('/dashboard') }}" size="lg">
-                                Dashboard
+                                Dasbor
                             </x-ui.button>
                         @else
                             <x-ui.button href="{{ route('login') }}" size="lg">
-                                Sign In
+                                Masuk
                             </x-ui.button>
                             @if (Route::has('register'))
                                 <x-ui.button href="{{ route('register') }}" variant="outline" size="lg">
-                                    Get Started
+                                    Daftar
                                 </x-ui.button>
                             @endif
                         @endauth

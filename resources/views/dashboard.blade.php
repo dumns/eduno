@@ -70,8 +70,14 @@
                                                 <div class="flex-1 min-w-0">
                                                     <p class="text-ui-sm font-semibold text-foreground dark:text-foreground-dark">{{ $item['title'] }}</p>
                                                     <div class="flex items-center gap-3 mt-1">
-                                                        <span class="text-ui-xs text-muted dark:text-muted-dark">{{ $item['session'] }}</span>
-                                                        <span class="text-ui-xs font-medium text-primary">{{ $item['time'] }}</span>
+                                                        <span class="text-ui-xs text-muted dark:text-muted-dark flex items-center gap-1">
+                                                            <x-ui.icon name="book" size="xs" />
+                                                            {{ $item['session'] }}
+                                                        </span>
+                                                        <span class="text-ui-xs font-medium text-primary flex items-center gap-1">
+                                                            <x-ui.icon name="clock" size="xs" />
+                                                            {{ $item['time'] }}
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -228,9 +234,9 @@
                         @endphp
 
                         @foreach ($courses as $course)
-                            <a href="#" class="flex flex-col bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl transition-all duration-200 hover:border-primary/30 hover:shadow-sm group h-full">
+                            <a href="#" class="flex flex-col bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl transition-all duration-200 hover:border-primary/30 hover:shadow-sm h-full">
                                 <div class="p-4 pb-0">
-                                    <p class="text-ui-sm font-semibold text-foreground dark:text-foreground-dark group-hover:text-primary transition-colors leading-snug">{{ $course['name'] }} ({{ $course['code'] }})</p>
+                                    <p class="text-ui-sm font-semibold text-foreground dark:text-foreground-dark hover:text-primary transition-colors leading-snug">{{ $course['name'] }} ({{ $course['code'] }})</p>
                                 </div>
                                 <div class="p-4 space-y-2.5 flex-1">
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
@@ -248,27 +254,20 @@
                             </a>
                         @endforeach
                     </div>
-
-                    {{-- Pagination placeholder --}}
-                    <div class="mt-6 flex justify-center">
-                        <x-ui.button href="{{ route('dashboard') }}" variant="ghost" size="sm" icon="chevron-right" icon-position="right">
-                            Tampilkan Semuanya
-                        </x-ui.button>
-                    </div>
                 </div>
 
                 {{-- ============================================================ --}}
                 {{-- KELAS PERSONAL TAB CONTENT                                  --}}
                 {{-- ============================================================ --}}
                 <div x-show="tab === 'personal'" class="p-5 sm:p-6" style="display: none;">
-                    <div class="flex items-center justify-between mb-4">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
                         <div>
                             <x-ui.heading level="h3" size="lg">Kelas Personal</x-ui.heading>
                             <x-ui.text size="sm" color="muted">Anda dapat membuat atau mengikuti kelas personal</x-ui.text>
                         </div>
                         <div class="flex items-center gap-2">
                             <a href="#" class="inline-flex items-center gap-1.5 px-3 py-2 text-ui-sm font-medium rounded-ui-lg border border-border dark:border-border-dark text-foreground dark:text-foreground-dark bg-white dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                                <x-ui.icon name="plus" size="xs" />
+                                <x-ui.icon name="plus" size="sm" />
                                 <span>Ikuti kelas</span>
                             </a>
                             <x-ui.button href="#" variant="primary" size="sm" icon="plus">
@@ -342,9 +341,9 @@
                         @endphp
 
                         @foreach ($personalCourses as $course)
-                            <a href="#" class="flex flex-col bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl transition-all duration-200 hover:border-primary/30 hover:shadow-sm group h-full">
+                            <a href="#" class="flex flex-col bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl transition-all duration-200 hover:border-primary/30 hover:shadow-sm h-full">
                                 <div class="flex flex-wrap items-center gap-x-2 gap-y-1 p-4 pb-0">
-                                    <p class="text-ui-sm font-semibold text-foreground dark:text-foreground-dark group-hover:text-primary transition-colors leading-snug">{{ $course['name'] }} ({{ $course['code'] }})</p>
+                                    <p class="text-ui-sm font-semibold text-foreground dark:text-foreground-dark hover:text-primary transition-colors leading-snug">{{ $course['name'] }} ({{ $course['code'] }})</p>
                                     <span class="inline-flex items-center px-2 py-0.5 text-ui-xs font-medium rounded-full bg-primary/10 text-primary">{{ $course['badge'] }}</span>
                                 </div>
                                 <div class="p-4 space-y-2.5 flex-1">

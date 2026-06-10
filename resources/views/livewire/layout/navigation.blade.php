@@ -12,50 +12,47 @@ new class extends Component {
 }; ?>
 
 <header class="sticky top-0 z-50 bg-white dark:bg-surface-dark border-b border-border dark:border-border-dark">
-    <div class="grid grid-cols-3 items-center h-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-start">
-            <div class="flex items-center gap-2.5">
-                <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center">
-                    <x-application-logo class="h-9 w-auto fill-current text-primary dark:text-primary-light" />
-                </a>
-                <h1 class="m-0">
-                    <span class="text-ui-base font-bold text-foreground dark:text-foreground-dark whitespace-nowrap">Eduno</span>
-                </h1>
-            </div>
+    <div class="flex items-center h-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-2.5 flex-shrink-0">
+            <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center">
+                <x-application-logo class="h-9 w-auto fill-current text-primary dark:text-primary-light" />
+            </a>
+            <h1 class="m-0">
+                <span class="text-ui-base font-bold text-foreground dark:text-foreground-dark whitespace-nowrap">Eduno</span>
+            </h1>
         </div>
 
-        <div class="hidden md:flex items-center justify-center">
+        <div class="hidden md:flex items-center justify-center flex-1">
             <nav>
                 <ul class="flex items-center gap-1 list-none m-0 p-0">
-                    <li class="{{ request()->routeIs('dashboard') ? '' : '' }}">
-                        <a href="{{ route('dashboard') }}" wire:navigate class="inline-flex items-center gap-1.5 px-3 py-2 text-ui-sm font-medium rounded-ui-lg transition-all duration-150 {{ request()->routeIs('dashboard') ? 'bg-gray-100 dark:bg-gray-800 text-foreground dark:text-foreground-dark' : 'text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800' }}">
-                            <span class="inline-flex items-center">
-                                <i class="za-house-duotone w-5 h-5"></i>
-                            </span>
+                    <li>
+                        <a href="{{ route('dashboard') }}" wire:navigate
+                            class="relative inline-flex items-center gap-1.5 px-4 py-2 text-ui-sm font-medium rounded-ui-lg transition-all duration-150
+                            {{ request()->routeIs('dashboard')
+                                ? 'bg-primary/10 text-primary dark:bg-primary-dark/20 dark:text-primary-light'
+                                : 'text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800' }}">
+                            <i class="za-house-duotone w-5 h-5"></i>
                             <span>Beranda</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('dashboard') }}" wire:navigate class="inline-flex items-center gap-1.5 px-3 py-2 text-ui-sm font-medium rounded-ui-lg transition-all duration-150 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800">
-                            <span class="inline-flex items-center">
-                                <i class="za-file-text-duotone w-5 h-5"></i>
-                            </span>
+                        <a href="{{ route('dashboard') }}" wire:navigate
+                            class="relative inline-flex items-center gap-1.5 px-4 py-2 text-ui-sm font-medium rounded-ui-lg transition-all duration-150 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800">
+                            <i class="za-file-text-duotone w-5 h-5"></i>
                             <span class="whitespace-nowrap">Timeline &amp; Berita</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('dashboard') }}" wire:navigate class="inline-flex items-center gap-1.5 px-3 py-2 text-ui-sm font-medium rounded-ui-lg transition-all duration-150 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800">
-                            <span class="inline-flex items-center">
-                                <i class="za-chat-dots-duotone w-5 h-5"></i>
-                            </span>
+                        <a href="{{ route('dashboard') }}" wire:navigate
+                            class="relative inline-flex items-center gap-1.5 px-4 py-2 text-ui-sm font-medium rounded-ui-lg transition-all duration-150 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800">
+                            <i class="za-chat-dots-duotone w-5 h-5"></i>
                             <span>Obrolan</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('dashboard') }}" wire:navigate class="inline-flex items-center gap-1.5 px-3 py-2 text-ui-sm font-medium rounded-ui-lg transition-all duration-150 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800">
-                            <span class="inline-flex items-center">
-                                <i class="za-compass-duotone w-5 h-5"></i>
-                            </span>
+                        <a href="{{ route('dashboard') }}" wire:navigate
+                            class="relative inline-flex items-center gap-1.5 px-4 py-2 text-ui-sm font-medium rounded-ui-lg transition-all duration-150 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800">
+                            <i class="za-compass-duotone w-5 h-5"></i>
                             <span>Jelajah</span>
                         </a>
                     </li>
@@ -63,10 +60,11 @@ new class extends Component {
             </nav>
         </div>
 
-        <div class="flex items-center justify-end gap-2">
+        <div class="flex items-center gap-2 ml-auto">
             @auth
                 <x-ui.tooltip text="Support" position="bottom" class="hidden xl:inline-flex">
-                    <a href="#" class="inline-flex items-center justify-center w-10 h-10 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-ui-lg transition-all duration-150">
+                    <a href="#"
+                        class="inline-flex items-center justify-center w-10 h-10 text-muted dark:text-muted-dark hover:text-primary dark:hover:text-primary-light hover:bg-primary/10 dark:hover:bg-primary-dark/20 rounded-ui-lg transition-all duration-150">
                         <i class="za-life-ring-duotone w-5 h-5"></i>
                     </a>
                 </x-ui.tooltip>
@@ -74,17 +72,19 @@ new class extends Component {
                 <x-ui.tooltip text="Notifikasi" position="bottom">
                     <x-ui.dropdown align="right" width="64">
                         <x-slot name="trigger">
-                            <button type="button" class="relative inline-flex items-center justify-center w-10 h-10 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-ui-lg transition-all duration-150">
+                            <button type="button"
+                                class="relative inline-flex items-center justify-center w-10 h-10 text-muted dark:text-muted-dark hover:text-primary dark:hover:text-primary-light hover:bg-primary/10 dark:hover:bg-primary-dark/20 rounded-ui-lg transition-all duration-150">
                                 <x-ui.icon name="bell" size="sm" />
-                                <span class="absolute top-2 right-2 w-2 h-2 bg-danger rounded-full"></span>
+                                <span class="absolute top-2 right-2 w-2 h-2 bg-danger rounded-full ring-2 ring-white dark:ring-surface-dark"></span>
                             </button>
                         </x-slot>
-                    <div class="px-4 py-3 text-ui-sm text-muted dark:text-muted-dark text-center">Tidak ada notifikasi</div>
-                </x-ui.dropdown>
+                        <div class="px-4 py-3 text-ui-sm text-muted dark:text-muted-dark text-center">Tidak ada notifikasi</div>
+                    </x-ui.dropdown>
                 </x-ui.tooltip>
 
                 <div x-data="{ open: false }" class="relative" @click.outside="open = false">
-                    <button @click="open = !open" type="button" class="flex items-center gap-2 p-1.5 rounded-ui-xl hover:bg-primary-light/50 dark:hover:bg-primary-dark/20 hover:ring-2 hover:ring-primary/30 transition-all duration-150">
+                    <button @click="open = !open" type="button"
+                        class="flex items-center gap-2 p-1.5 rounded-ui-xl hover:bg-primary/10 dark:hover:bg-primary-dark/20 hover:ring-2 hover:ring-primary/30 transition-all duration-150">
                         <x-ui.avatar src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&color=7c3aed&background=EDE9FE" size="sm" />
                         <span class="hidden lg:block text-start">
                             <span class="block text-ui-sm font-medium text-foreground dark:text-foreground-dark leading-tight">{{ auth()->user()->name }}</span>
@@ -93,7 +93,6 @@ new class extends Component {
                         <x-ui.icon name="chevron-down" size="xs" class="hidden lg:block text-muted dark:text-muted-dark transition-transform duration-200" x-bind:class="{'rotate-180': open}" />
                     </button>
                     <div x-show="open" x-cloak x-transition:enter="transition-all duration-200 ease-out" x-transition:enter-start="opacity-0 scale-95 translate-y-1" x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition-all duration-150 ease-in" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 top-full mt-2 w-64 z-50 rounded-ui-2xl bg-white dark:bg-surface-dark border border-border dark:border-border-dark shadow-ui-xl overflow-hidden" @click="open = false">
-                        {{-- Profile card header --}}
                         <div class="bg-gradient-to-br from-primary/5 to-primary-light/10 dark:from-primary-dark/20 dark:to-primary/5 px-4 py-4">
                             <div class="flex items-center gap-3">
                                 <x-ui.avatar src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&color=7c3aed&background=EDE9FE" size="md" />
@@ -112,31 +111,62 @@ new class extends Component {
             @endauth
 
             @guest
-                <x-ui.button href="{{ route('login') }}" variant="ghost" size="sm">Sign In</x-ui.button>
-                <x-ui.button href="{{ route('register') }}" size="sm">Get Started</x-ui.button>
+                <x-ui.button href="{{ route('login') }}" variant="ghost" size="sm">Masuk</x-ui.button>
+                <x-ui.button href="{{ route('register') }}" size="sm">Daftar</x-ui.button>
             @endguest
 
             <div x-data="{ mobileOpen: false }" class="md:hidden relative">
-                <button @click="mobileOpen = !mobileOpen" type="button" class="p-2 rounded-ui-xl text-muted dark:text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all duration-150">
-                    <i class="za-menu-bars-duotone h-6 w-6" :class="{'hidden': mobileOpen, 'inline-flex': !mobileOpen}"></i>
-                    <i class="za-xmark-duotone h-6 w-6" :class="{'hidden': !mobileOpen, 'inline-flex': mobileOpen}"></i>
+                <button @click="mobileOpen = !mobileOpen" type="button"
+                    class="p-2 rounded-ui-xl text-muted dark:text-muted-dark hover:text-primary dark:hover:text-primary-light hover:bg-primary/10 dark:hover:bg-primary-dark/20 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all duration-150">
+                    <i class="za-menu-bars h-6 w-6" :class="{'hidden': mobileOpen, 'inline-flex': !mobileOpen}"></i>
+                    <i class="za-xmark h-6 w-6" :class="{'hidden': !mobileOpen, 'inline-flex': mobileOpen}"></i>
                 </button>
-                <div x-show="mobileOpen" x-cloak x-transition:enter="transition-all duration-200 ease-out" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-all duration-150 ease-in" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="fixed right-4 top-16 mt-1 w-64 bg-white dark:bg-surface-dark rounded-ui-xl ring-1 ring-black/5 dark:ring-white/10 shadow-lg z-50" @click.outside="mobileOpen = false" @click="mobileOpen = false">
-                    <div class="py-1">
-                        <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-foreground dark:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg">
-                            <span class="inline-flex items-center">
-                                <i class="za-house-duotone w-[18px] h-[18px]"></i>
-                            </span>
+                <div x-show="mobileOpen" x-cloak
+                    x-transition:enter="transition-all duration-200 ease-out"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition-all duration-150 ease-in"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                    class="fixed left-4 right-4 top-16 mt-1 bg-white dark:bg-surface-dark rounded-ui-2xl border border-border dark:border-border-dark shadow-ui-xl z-50 overflow-hidden"
+                    @click.outside="mobileOpen = false">
+                    <div class="py-2">
+                        <div class="px-4 py-2 text-ui-xs font-semibold text-muted dark:text-muted-dark uppercase tracking-wider">Menu</div>
+                        <a href="{{ route('dashboard') }}" wire:navigate
+                            class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-foreground dark:text-foreground-dark hover:bg-primary/10 dark:hover:bg-primary-dark/20 rounded-ui-lg mx-2 transition-all duration-150"
+                            @click="mobileOpen = false">
+                            <i class="za-house-duotone w-[18px] h-[18px] text-primary"></i>
                             Beranda
                         </a>
+                        <a href="{{ route('dashboard') }}" wire:navigate
+                            class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg mx-2 transition-all duration-150"
+                            @click="mobileOpen = false">
+                            <i class="za-file-text-duotone w-[18px] h-[18px]"></i>
+                            Timeline &amp; Berita
+                        </a>
+                        <a href="{{ route('dashboard') }}" wire:navigate
+                            class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg mx-2 transition-all duration-150"
+                            @click="mobileOpen = false">
+                            <i class="za-chat-dots-duotone w-[18px] h-[18px]"></i>
+                            Obrolan
+                        </a>
+                        <a href="{{ route('dashboard') }}" wire:navigate
+                            class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg mx-2 transition-all duration-150"
+                            @click="mobileOpen = false">
+                            <i class="za-compass-duotone w-[18px] h-[18px]"></i>
+                            Jelajah
+                        </a>
                         @auth
-                            <div class="border-t border-border dark:border-border-dark my-1"></div>
-                            <a href="{{ route('profile') }}" wire:navigate class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-foreground dark:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg">
+                            <div class="border-t border-border dark:border-border-dark my-2 mx-4"></div>
+                            <a href="{{ route('profile') }}" wire:navigate
+                                class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg mx-2 transition-all duration-150"
+                                @click="mobileOpen = false">
                                 <x-ui.icon name="user" size="sm" class="text-muted dark:text-muted-dark" />
-                                Profile
+                                Pengaturan Akun
                             </a>
-                            <div class="border-t border-border dark:border-border-dark my-1"></div>
-                            <button wire:click="logout" class="flex items-center gap-3 w-full px-4 py-2.5 text-ui-sm font-medium text-danger hover:bg-danger-light dark:hover:bg-danger/20 rounded-ui-lg">
+                            <button wire:click="logout"
+                                class="flex items-center gap-3 w-full px-4 py-2.5 text-ui-sm font-medium text-danger hover:bg-danger-light dark:hover:bg-danger/20 rounded-ui-lg mx-2 transition-all duration-150"
+                                style="width: calc(100% - 1rem);">
                                 <x-ui.icon name="arrow-right" size="sm" />
                                 Keluar
                             </button>
