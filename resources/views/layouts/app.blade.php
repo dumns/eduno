@@ -6,6 +6,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="application-name" content="{{ config('app.name') }}">
 
+        <link rel="icon" type="image/svg+xml" href="{{ asset('assets/logo/cakrawala-icon.svg') }}">
+
         <title>{{ config('app.name') }} @isset($header) - {{ $header }} @endisset</title>
 
         <style>[x-cloak] { display: none !important; }</style>

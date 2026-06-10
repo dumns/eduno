@@ -27,6 +27,10 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('Cakrawala')
+            ->brandLogo(asset('assets/logo/cakrawala-logo.svg'))
+            ->brandLogoHeight('2.5rem')
+            ->favicon(asset('assets/logo/cakrawala-icon.svg'))
             ->colors([
                 'primary' => Color::Amber,
             ])

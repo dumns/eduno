@@ -15,11 +15,8 @@ new class extends Component {
     <div class="flex items-center h-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center gap-2.5 flex-shrink-0">
             <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center">
-                <x-application-logo class="h-9 w-auto fill-current text-primary dark:text-primary-light" />
+                <x-application-logo class="h-9 w-auto" />
             </a>
-            <h1 class="m-0">
-                <span class="text-ui-base font-bold text-foreground dark:text-foreground-dark whitespace-nowrap">Eduno</span>
-            </h1>
         </div>
 
         <div class="hidden md:flex items-center justify-center flex-1">
