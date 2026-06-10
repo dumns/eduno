@@ -7,6 +7,8 @@
 
         <title>{{ config('app.name') }}</title>
 
+        <link rel="icon" type="image/svg+xml" href="{{ asset('assets/logo/cakrawala-icon.svg') }}">
+
         <style>[x-cloak] { display: none !important; }</style>
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -19,7 +21,7 @@
         <div class="relative min-h-screen flex flex-col items-center justify-center px-4 py-16">
             <div class="max-w-4xl mx-auto text-center">
                 <div class="flex justify-center mb-8">
-                    <x-application-logo class="h-20 w-auto fill-current text-primary" />
+                    <x-application-logo class="h-20 w-auto" />
                 </div>
 
                 <x-ui.heading level="h1" size="4xl" weight="bold" class="mb-4">
