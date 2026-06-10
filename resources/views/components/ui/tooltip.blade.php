@@ -23,7 +23,7 @@
 <div class="relative inline-flex group {{ $class }}">
     {{ $slot }}
     <div class="absolute z-50 {{ $positionClasses[$position] }} hidden group-hover:block pointer-events-none">
-        <div class="relative px-2 py-1 text-ui-xs font-medium text-white bg-gray-900 dark:bg-gray-700 rounded-ui-md shadow-sm max-w-xs break-words text-center">
+        <div class="relative px-2 py-1 text-ui-xs font-medium text-white bg-gray-900 dark:bg-gray-700 rounded-ui-md shadow-sm max-w-md break-words text-center">
             {{ $text }}
             <div class="absolute {{ $arrowClasses[$position] }}"></div>
         </div>
