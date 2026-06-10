@@ -1,11 +1,4 @@
 <x-ui.layouts.app>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <x-ui.heading level="h1" size="xl">Dashboard</x-ui.heading>
-            <x-ui.text size="sm" color="muted">{{ now()->format('l, F j, Y') }}</x-ui.text>
-        </div>
-    </x-slot>
-
     @php
         $today = now();
         $startOfWeek = $today->copy()->startOfWeek();
@@ -188,6 +181,7 @@
                                     'code' => 'PD07',
                                     'lecturer' => 'SU',
                                     'others' => 2,
+                                    'other_names' => ['Melania Aldia Pitaloka', 'Yusika Intan Insiwi'],
                                     'day' => 'Rabu',
                                     'start' => '17:37',
                                     'end' => '19:37',
@@ -199,6 +193,7 @@
                                     'code' => 'SU64',
                                     'lecturer' => 'SU',
                                     'others' => 2,
+                                    'other_names' => ['Ahmad Fauzi', 'Siti Nurhaliza'],
                                     'day' => 'Kamis',
                                     'start' => '10:13',
                                     'end' => '12:13',
@@ -210,6 +205,7 @@
                                     'code' => 'ENG49',
                                     'lecturer' => 'SU',
                                     'others' => 4,
+                                    'other_names' => ['Rina Wijaya', 'Bambang Suprapto', 'Dewi Lestari', 'Agus Hartono'],
                                     'day' => 'Rabu',
                                     'start' => '15:00',
                                     'end' => '17:00',
@@ -221,6 +217,7 @@
                                     'code' => 'ENG46',
                                     'lecturer' => 'SU',
                                     'others' => 3,
+                                    'other_names' => ['Fitriani Rahmawati', 'Hendra Gunawan', 'Indah Permata Sari'],
                                     'day' => 'Jumat',
                                     'start' => '14:00',
                                     'end' => '16:15',
@@ -238,7 +235,7 @@
                                 <div class="p-4 space-y-2.5 flex-1">
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-user-duotone w-3.5 h-3.5 flex-shrink-0"></i>
-                                        <span>Dosen {{ $course['lecturer'] }} <span class="text-primary hover:underline cursor-pointer">dan {{ $course['others'] }} lainnya</span></span>
+                                        <span>Dosen {{ $course['lecturer'] }} <x-ui.tooltip text="{{ !empty($course['other_names']) ? implode('; ', $course['other_names']) : $course['others'] . ' dosen lain' }}" position="top" class="inline"><span class="text-primary hover:underline cursor-pointer">dan {{ $course['others'] }} lainnya</span></x-ui.tooltip></span>
                                     </div>
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-calendar-duotone w-3.5 h-3.5 flex-shrink-0"></i>
@@ -319,6 +316,7 @@
                                     'badge' => 'Kelas Umum',
                                     'lecturer' => 'SU',
                                     'others' => 2,
+                                    'other_names' => ['Rizky Pratama', 'Anisa Kusuma'],
                                     'day' => 'Selasa',
                                     'start' => '08:30',
                                     'end' => '10:30',
@@ -332,6 +330,7 @@
                                     'badge' => 'Kelas Umum',
                                     'lecturer' => 'SU',
                                     'others' => 1,
+                                    'other_names' => ['Dimas Prayoga'],
                                     'day' => 'Selasa',
                                     'start' => '09:00',
                                     'end' => '11:00',
@@ -351,7 +350,7 @@
                                 <div class="p-4 space-y-2.5 flex-1">
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-user-duotone w-3.5 h-3.5 flex-shrink-0"></i>
-                                        <span>Dosen {{ $course['lecturer'] }} <span class="text-primary hover:underline cursor-pointer">dan {{ $course['others'] }} lainnya</span></span>
+                                        <span>Dosen {{ $course['lecturer'] }} <x-ui.tooltip text="{{ !empty($course['other_names']) ? implode('; ', $course['other_names']) : $course['others'] . ' dosen lain' }}" position="top" class="inline"><span class="text-primary hover:underline cursor-pointer">dan {{ $course['others'] }} lainnya</span></x-ui.tooltip></span>
                                     </div>
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-calendar-duotone w-3.5 h-3.5 flex-shrink-0"></i>

@@ -65,38 +65,46 @@ new class extends Component {
 
         <div class="flex items-center justify-end gap-2">
             @auth
-                <a href="#" class="hidden xl:inline-flex items-center justify-center w-10 h-10 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-ui-lg transition-all duration-150" title="Support">
-                    <i class="za-life-ring-duotone w-5 h-5"></i>
-                </a>
+                <x-ui.tooltip text="Support" position="bottom" class="hidden xl:inline-flex">
+                    <a href="#" class="inline-flex items-center justify-center w-10 h-10 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-ui-lg transition-all duration-150">
+                        <i class="za-life-ring-duotone w-5 h-5"></i>
+                    </a>
+                </x-ui.tooltip>
 
-                <x-ui.dropdown align="right" width="64">
-                    <x-slot name="trigger">
-                        <button type="button" class="relative inline-flex items-center justify-center w-10 h-10 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-ui-lg transition-all duration-150">
-                            <x-ui.icon name="bell" size="sm" />
-                            <span class="absolute top-2 right-2 w-2 h-2 bg-danger rounded-full"></span>
-                        </button>
-                    </x-slot>
+                <x-ui.tooltip text="Notifikasi" position="bottom">
+                    <x-ui.dropdown align="right" width="64">
+                        <x-slot name="trigger">
+                            <button type="button" class="relative inline-flex items-center justify-center w-10 h-10 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-ui-lg transition-all duration-150">
+                                <x-ui.icon name="bell" size="sm" />
+                                <span class="absolute top-2 right-2 w-2 h-2 bg-danger rounded-full"></span>
+                            </button>
+                        </x-slot>
                     <div class="px-4 py-3 text-ui-sm text-muted dark:text-muted-dark text-center">Tidak ada notifikasi</div>
                 </x-ui.dropdown>
+                </x-ui.tooltip>
 
                 <div x-data="{ open: false }" class="relative" @click.outside="open = false">
-                    <button @click="open = !open" type="button" class="flex items-center gap-2 p-1 rounded-ui-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-150">
+                    <button @click="open = !open" type="button" class="flex items-center gap-2 p-1.5 rounded-ui-xl hover:bg-primary-light/50 dark:hover:bg-primary-dark/20 hover:ring-2 hover:ring-primary/30 transition-all duration-150">
                         <x-ui.avatar src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&color=7c3aed&background=EDE9FE" size="sm" />
                         <span class="hidden lg:block text-start">
                             <span class="block text-ui-sm font-medium text-foreground dark:text-foreground-dark leading-tight">{{ auth()->user()->name }}</span>
                             <span class="block text-ui-xs text-muted dark:text-muted-dark leading-tight">Peserta</span>
                         </span>
-                        <x-ui.icon name="chevron-down" size="xs" class="hidden lg:block text-muted dark:text-muted-dark" x-bind:class="{'rotate-180': open}" />
+                        <x-ui.icon name="chevron-down" size="xs" class="hidden lg:block text-muted dark:text-muted-dark transition-transform duration-200" x-bind:class="{'rotate-180': open}" />
                     </button>
-                    <div x-show="open" x-cloak x-transition:enter="transition-all duration-150 ease-out" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-all duration-100 ease-in" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 top-full mt-2 w-56 z-50 rounded-ui-xl bg-white dark:bg-surface-dark ring-1 ring-black/5 dark:ring-white/10 shadow-lg" @click="open = false">
-                        <div class="py-1">
-                            <div class="flex items-center gap-2.5 px-4 py-2.5 text-ui-sm font-semibold text-foreground dark:text-foreground-dark">
-                                <i class="za-share-duotone w-4 h-4"></i>
-                                Eduno package
+                    <div x-show="open" x-cloak x-transition:enter="transition-all duration-200 ease-out" x-transition:enter-start="opacity-0 scale-95 translate-y-1" x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition-all duration-150 ease-in" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 top-full mt-2 w-64 z-50 rounded-ui-2xl bg-white dark:bg-surface-dark border border-border dark:border-border-dark shadow-ui-xl overflow-hidden" @click="open = false">
+                        {{-- Profile card header --}}
+                        <div class="bg-gradient-to-br from-primary/5 to-primary-light/10 dark:from-primary-dark/20 dark:to-primary/5 px-4 py-4">
+                            <div class="flex items-center gap-3">
+                                <x-ui.avatar src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&color=7c3aed&background=EDE9FE" size="md" />
+                                <div class="min-w-0">
+                                    <p class="text-ui-sm font-semibold text-foreground dark:text-foreground-dark truncate">{{ auth()->user()->name }}</p>
+                                    <p class="text-ui-xs text-muted dark:text-muted-dark truncate">{{ auth()->user()->email }}</p>
+                                </div>
                             </div>
-                            <div class="border-t border-border dark:border-border-dark my-1"></div>
-                            <x-ui.dropdown-item href="{{ route('profile') }}" icon="settings" wire:navigate>Pengaturan</x-ui.dropdown-item>
-                            <div class="border-t border-border dark:border-border-dark my-1"></div>
+                        </div>
+                        <div class="py-1">
+                            <x-ui.dropdown-item href="{{ route('profile') }}" icon="gear" wire:navigate>Pengaturan Akun</x-ui.dropdown-item>
                             <x-ui.dropdown-item icon="arrow-right" variant="danger" wire:click="logout">Keluar</x-ui.dropdown-item>
                         </div>
                     </div>

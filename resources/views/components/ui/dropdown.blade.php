@@ -42,7 +42,7 @@
         x-transition:leave="transition-all duration-100 ease-in"
         x-transition:leave-start="opacity-100 scale-100"
         x-transition:leave-end="opacity-0 scale-95"
-        class="absolute z-50 mt-1 {{ $alignmentClasses }} {{ $widthClasses }} rounded-ui-xl bg-white dark:bg-surface-dark ring-1 ring-black/5 dark:ring-white/10 {{ $contentClasses }}"
+        class="absolute z-50 mt-2 {{ $alignmentClasses }} {{ $widthClasses }} rounded-ui-2xl bg-white dark:bg-surface-dark border border-border dark:border-border-dark shadow-ui-xl {{ $contentClasses }}"
         @click="open = false"
         style="display: none;">
         <div class="py-1">
