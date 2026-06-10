@@ -1,29 +1,19 @@
-<x-app-layout>
+<x-ui.layouts.app>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Profile') }}
-        </h2>
+        <x-ui.heading level="h1" size="xl">Profile</x-ui.heading>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    <livewire:profile.update-profile-information-form />
-                </div>
-            </div>
+    <div class="max-w-3xl mx-auto space-y-6">
+        <x-ui.card variant="elevated">
+            <livewire:profile.update-profile-information-form />
+        </x-ui.card>
 
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    <livewire:profile.update-password-form />
-                </div>
-            </div>
+        <x-ui.card variant="elevated">
+            <livewire:profile.update-password-form />
+        </x-ui.card>
 
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    <livewire:profile.delete-user-form />
-                </div>
-            </div>
-        </div>
+        <x-ui.card variant="elevated">
+            <livewire:profile.delete-user-form />
+        </x-ui.card>
     </div>
-</x-app-layout>
+</x-ui.layouts.app>

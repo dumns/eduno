@@ -9,54 +9,43 @@ use Livewire\Volt\Component;
 
 new #[Layout('layouts.guest')] class extends Component
 {
-    /**
-     * Send an email verification notification to the user.
-     */
     public function sendVerification(): void
     {
         if (Auth::user()->hasVerifiedEmail()) {
-            $this->redirect(
-                session('url.intended', RouteServiceProvider::HOME),
-                navigate: true
-            );
-
+            $this->redirect(session('url.intended', RouteServiceProvider::HOME), navigate: true);
             return;
         }
 
         Auth::user()->sendEmailVerificationNotification();
-
         Session::flash('status', 'verification-link-sent');
     }
 
-    /**
-     * Log the current user out of the application.
-     */
     public function logout(Logout $logout): void
     {
         $logout();
-
         $this->redirect('/', navigate: true);
     }
 }; ?>
 
 <div>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
-    </div>
+    <x-ui.heading level="h2" size="xl" class="mb-3">Verify Your Email</x-ui.heading>
+    <x-ui.text size="sm" color="muted" class="mb-6">
+        Thanks for signing up! Before getting started, please verify your email address by clicking the link we just sent you. Didn't receive the email? We'll gladly send another.
+    </x-ui.text>
 
     @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-            {{ __('A new verification link has been sent to the email address you provided during registration.') }}
-        </div>
+        <x-ui.alert type="success" class="mb-4">
+            A new verification link has been sent to your email address.
+        </x-ui.alert>
     @endif
 
-    <div class="mt-4 flex items-center justify-between">
-        <x-primary-button wire:click="sendVerification">
-            {{ __('Resend Verification Email') }}
-        </x-primary-button>
+    <div class="flex items-center justify-between">
+        <x-ui.button wire:click="sendVerification" variant="primary">
+            Resend Verification Email
+        </x-ui.button>
 
-        <button wire:click="logout" type="submit" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-            {{ __('Log Out') }}
+        <button wire:click="logout" type="submit" class="text-ui-sm font-medium text-primary hover:text-primary-hover transition-colors duration-150">
+            Log Out
         </button>
     </div>
 </div>

@@ -8,14 +8,9 @@ new class extends Component
 {
     public string $password = '';
 
-    /**
-     * Delete the currently authenticated user.
-     */
     public function deleteUser(Logout $logout): void
     {
-        $this->validate([
-            'password' => ['required', 'string', 'current_password'],
-        ]);
+        $this->validate(['password' => ['required', 'string', 'current_password']]);
 
         tap(Auth::user(), $logout(...))->delete();
 
@@ -24,56 +19,37 @@ new class extends Component
 }; ?>
 
 <section class="space-y-6">
-    <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Delete Account') }}
-        </h2>
+    <x-ui.heading level="h3" size="lg" class="mb-1">Delete Account</x-ui.heading>
+    <x-ui.text size="sm" color="muted" class="mb-2">
+        Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.
+    </x-ui.text>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
-        </p>
-    </header>
-
-    <x-danger-button
+    <x-ui.button
+        variant="danger"
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >{{ __('Delete Account') }}</x-danger-button>
+    >
+        Delete Account
+    </x-ui.button>
 
-    <x-modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" focusable>
-        <form wire:submit="deleteUser" class="p-6">
+    <x-ui.modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" title="Confirm Account Deletion">
+        <x-ui.text size="sm" color="muted" class="mb-4">
+            Are you sure you want to delete your account? Please enter your password to confirm.
+        </x-ui.text>
 
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                {{ __('Are you sure you want to delete your account?') }}
-            </h2>
+        <form wire:submit="deleteUser">
+            <x-ui.form-group label="Password" name="password" :error="$errors->first('password')" required>
+                <x-ui.input type="password" name="password" wire:model="password" placeholder="Enter your password" />
+            </x-ui.form-group>
 
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
-            </p>
-
-            <div class="mt-6">
-                <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
-
-                <x-text-input
-                    wire:model="password"
-                    id="password"
-                    name="password"
-                    type="password"
-                    class="mt-1 block w-3/4"
-                    placeholder="{{ __('Password') }}"
-                />
-
-                <x-input-error :messages="$errors->get('password')" class="mt-2" />
-            </div>
-
-            <div class="mt-6 flex justify-end">
-                <x-secondary-button x-on:click="$dispatch('close')">
-                    {{ __('Cancel') }}
-                </x-secondary-button>
-
-                <x-danger-button class="ms-3">
-                    {{ __('Delete Account') }}
-                </x-danger-button>
-            </div>
+            <x-slot:footer>
+                <x-ui.button type="button" variant="ghost" x-on:click="$dispatch('close')">
+                    Cancel
+                </x-ui.button>
+                <x-ui.button type="submit" variant="danger">
+                    Delete Account
+                </x-ui.button>
+            </x-slot:footer>
         </form>
-    </x-modal>
+    </x-ui.modal>
 </section>

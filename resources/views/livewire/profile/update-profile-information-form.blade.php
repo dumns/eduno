@@ -12,18 +12,12 @@ new class extends Component
     public string $name = '';
     public string $email = '';
 
-    /**
-     * Mount the component.
-     */
     public function mount(): void
     {
         $this->name = Auth::user()->name;
         $this->email = Auth::user()->email;
     }
 
-    /**
-     * Update the profile information for the currently authenticated user.
-     */
     public function updateProfileInformation(): void
     {
         $user = Auth::user();
@@ -44,72 +38,49 @@ new class extends Component
         $this->dispatch('profile-updated', name: $user->name);
     }
 
-    /**
-     * Send an email verification notification to the current user.
-     */
     public function sendVerification(): void
     {
         $user = Auth::user();
 
         if ($user->hasVerifiedEmail()) {
             $path = session('url.intended', RouteServiceProvider::HOME);
-
             $this->redirect($path);
-
             return;
         }
 
         $user->sendEmailVerificationNotification();
-
         Session::flash('status', 'verification-link-sent');
     }
 }; ?>
 
 <section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Profile Information') }}
-        </h2>
+    <x-ui.heading level="h3" size="lg" class="mb-1">Profile Information</x-ui.heading>
+    <x-ui.text size="sm" color="muted" class="mb-6">
+        Update your account's profile information and email address.
+    </x-ui.text>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __("Update your account's profile information and email address.") }}
-        </p>
-    </header>
+    <form wire:submit="updateProfileInformation" class="space-y-5">
+        <x-ui.form-group label="Name" name="name" :error="$errors->first('name')" required>
+            <x-ui.input type="text" name="name" wire:model="name" required autofocus autocomplete="name" />
+        </x-ui.form-group>
 
-    <form wire:submit="updateProfileInformation" class="mt-6 space-y-6">
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input wire:model="name" id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
-        </div>
-
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" name="email" type="email" class="mt-1 block w-full" required autocomplete="username" />
-            <x-input-error class="mt-2" :messages="$errors->get('email')" />
-
+        <x-ui.form-group label="Email" name="email" :error="$errors->first('email')" required>
+            <x-ui.input type="email" name="email" wire:model="email" required autocomplete="username" />
             @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! auth()->user()->hasVerifiedEmail())
-                <div>
-                    <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
-                        {{ __('Your email address is unverified.') }}
-
-                        <button wire:click.prevent="sendVerification" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                            {{ __('Click here to re-send the verification email.') }}
-                        </button>
-                    </p>
-
+                <div class="mt-2">
+                    <x-ui.text size="xs" color="warning">
+                        Your email address is unverified.
+                        <button wire:click.prevent="sendVerification" class="underline hover:no-underline font-medium">Click here to re-send the verification email.</button>
+                    </x-ui.text>
                     @if (session('status') === 'verification-link-sent')
-                        <p class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
-                            {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
+                        <x-ui.text size="xs" color="success" class="mt-1">A new verification link has been sent to your email address.</x-ui.text>
                     @endif
                 </div>
             @endif
-        </div>
+        </x-ui.form-group>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
-
+            <x-ui.button type="submit" size="md">Save</x-ui.button>
             <x-action-message class="me-3" on="profile-updated">
                 {{ __('Saved.') }}
             </x-action-message>

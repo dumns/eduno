@@ -18,7 +18,105 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['"Plus Jakarta Sans"', ...defaultTheme.fontFamily.sans],
+            },
+
+            colors: {
+                primary: {
+                    DEFAULT: '#0595CF',
+                    hover: '#047AB5',
+                    light: '#E0F4FE',
+                    dark: '#0369A1',
+                },
+                secondary: {
+                    DEFAULT: '#0EA5E9',
+                    hover: '#0284C7',
+                    light: '#E0F2FE',
+                },
+                success: {
+                    DEFAULT: '#22C55E',
+                    hover: '#16A34A',
+                    light: '#DCFCE7',
+                },
+                danger: {
+                    DEFAULT: '#EF4444',
+                    hover: '#DC2626',
+                    light: '#FEE2E2',
+                },
+                warning: {
+                    DEFAULT: '#F59E0B',
+                    hover: '#D97706',
+                    light: '#FEF3C7',
+                },
+                info: {
+                    DEFAULT: '#3B82F6',
+                    hover: '#2563EB',
+                    light: '#DBEAFE',
+                },
+                foreground: {
+                    DEFAULT: '#0F172A',
+                    dark: '#F1F5F9',
+                },
+                background: {
+                    DEFAULT: '#FFFFFF',
+                    dark: '#0F172A',
+                },
+                surface: {
+                    DEFAULT: '#F8FAFC',
+                    dark: '#1E293B',
+                },
+                muted: {
+                    DEFAULT: '#64748B',
+                    dark: '#94A3B8',
+                },
+                border: {
+                    DEFAULT: '#E2E8F0',
+                    dark: '#334155',
+                },
+            },
+
+            spacing: {
+                'ui-xs': '0.25rem',
+                'ui-sm': '0.5rem',
+                'ui-md': '1rem',
+                'ui-lg': '1.5rem',
+                'ui-xl': '2rem',
+                'ui-2xl': '3rem',
+                'ui-3xl': '4rem',
+                'ui-4xl': '6rem',
+            },
+
+            borderRadius: {
+                'ui-sm': '0.25rem',
+                'ui-md': '0.375rem',
+                'ui-lg': '0.5rem',
+                'ui-xl': '0.75rem',
+                'ui-2xl': '1rem',
+            },
+
+            fontSize: {
+                'ui-xs': ['0.75rem', { lineHeight: '1rem' }],
+                'ui-sm': ['0.875rem', { lineHeight: '1.25rem' }],
+                'ui-base': ['1rem', { lineHeight: '1.5rem' }],
+                'ui-lg': ['1.125rem', { lineHeight: '1.75rem' }],
+                'ui-xl': ['1.25rem', { lineHeight: '1.75rem' }],
+                'ui-2xl': ['1.5rem', { lineHeight: '2rem' }],
+                'ui-3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+                'ui-4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+            },
+
+            boxShadow: {
+                'ui-sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+                'ui-md': '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                'ui-lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                'ui-xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
+                'ui-2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            },
+
+            transitionDuration: {
+                'ui-fast': '150ms',
+                'ui-normal': '250ms',
+                'ui-slow': '350ms',
             },
         },
     },
