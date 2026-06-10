@@ -11,108 +11,131 @@ new class extends Component {
     }
 }; ?>
 
-<nav x-data="{ open: false }" class="bg-white dark:bg-surface-dark border-b border-border dark:border-border-dark shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex items-center gap-8">
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('courses') }}" wire:navigate>
-                        <x-application-logo class="block h-9 w-auto fill-current text-primary dark:text-primary-light" />
-                    </a>
-                </div>
-
-                <div class="hidden sm:flex items-center gap-1">
-                    <x-nav-link :href="route('courses')" :active="request()->routeIs('courses')" wire:navigate>
-                        {{ __('Courses') }}
-                    </x-nav-link>
-                </div>
+<header class="sticky top-0 z-50 bg-white dark:bg-surface-dark border-b border-border dark:border-border-dark">
+    <div class="grid grid-cols-3 items-center h-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-start">
+            <div class="flex items-center gap-2.5">
+                <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center">
+                    <x-application-logo class="h-9 w-auto fill-current text-primary dark:text-primary-light" />
+                </a>
+                <h1 class="m-0">
+                    <span class="text-ui-base font-bold text-foreground dark:text-foreground-dark whitespace-nowrap">Eduno</span>
+                </h1>
             </div>
+        </div>
 
-            <div class="hidden sm:flex sm:items-center sm:gap-3">
-                @auth
-                    <x-ui.dropdown align="right" width="56">
-                        <x-slot name="trigger">
-                            <button type="button" class="inline-flex items-center gap-2 px-3 py-2 text-ui-sm font-medium text-foreground dark:text-foreground-dark bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-lg hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-150">
-                                <div x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name" x-on:profile-updated.window="name = $event.detail.name"></div>
-                                <x-ui.icon name="chevron-down" size="xs" />
-                            </button>
-                        </x-slot>
+        <div class="hidden md:flex items-center justify-center">
+            <nav>
+                <ul class="flex items-center gap-1 list-none m-0 p-0">
+                    <li class="{{ request()->routeIs('dashboard') ? '' : '' }}">
+                        <a href="{{ route('dashboard') }}" wire:navigate class="inline-flex items-center gap-1.5 px-3 py-2 text-ui-sm font-medium rounded-ui-lg transition-all duration-150 {{ request()->routeIs('dashboard') ? 'bg-gray-100 dark:bg-gray-800 text-foreground dark:text-foreground-dark' : 'text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800' }}">
+                            <span class="inline-flex items-center">
+                                <i class="za-house-duotone w-5 h-5"></i>
+                            </span>
+                            <span>Beranda</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('dashboard') }}" wire:navigate class="inline-flex items-center gap-1.5 px-3 py-2 text-ui-sm font-medium rounded-ui-lg transition-all duration-150 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800">
+                            <span class="inline-flex items-center">
+                                <i class="za-file-text-duotone w-5 h-5"></i>
+                            </span>
+                            <span class="whitespace-nowrap">Timeline &amp; Berita</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('dashboard') }}" wire:navigate class="inline-flex items-center gap-1.5 px-3 py-2 text-ui-sm font-medium rounded-ui-lg transition-all duration-150 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800">
+                            <span class="inline-flex items-center">
+                                <i class="za-chat-dots-duotone w-5 h-5"></i>
+                            </span>
+                            <span>Obrolan</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('dashboard') }}" wire:navigate class="inline-flex items-center gap-1.5 px-3 py-2 text-ui-sm font-medium rounded-ui-lg transition-all duration-150 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800">
+                            <span class="inline-flex items-center">
+                                <i class="za-compass-duotone w-5 h-5"></i>
+                            </span>
+                            <span>Jelajah</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
 
-                        <x-ui.dropdown-item :href="route('profile')" icon="user" wire:navigate>
-                            {{ __('Profile') }}
-                        </x-ui.dropdown-item>
+        <div class="flex items-center justify-end gap-2">
+            @auth
+                <a href="#" class="hidden xl:inline-flex items-center justify-center w-10 h-10 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-ui-lg transition-all duration-150" title="Support">
+                    <i class="za-life-ring-duotone w-5 h-5"></i>
+                </a>
 
-                        <div class="border-t border-border dark:border-border-dark my-1"></div>
-
-                        <button wire:click="logout" class="w-full text-start">
-                            <x-ui.dropdown-item icon="close" variant="danger">
-                                {{ __('Log Out') }}
-                            </x-ui.dropdown-item>
+                <x-ui.dropdown align="right" width="64">
+                    <x-slot name="trigger">
+                        <button type="button" class="relative inline-flex items-center justify-center w-10 h-10 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-ui-lg transition-all duration-150">
+                            <x-ui.icon name="bell" size="sm" />
+                            <span class="absolute top-2 right-2 w-2 h-2 bg-danger rounded-full"></span>
                         </button>
-                    </x-ui.dropdown>
-                @endauth
+                    </x-slot>
+                    <div class="px-4 py-3 text-ui-sm text-muted dark:text-muted-dark text-center">Tidak ada notifikasi</div>
+                </x-ui.dropdown>
 
-                @guest
-                    <x-ui.button href="{{ route('login') }}" variant="ghost" size="sm">
-                        Sign In
-                    </x-ui.button>
-                    <x-ui.button href="{{ route('register') }}" size="sm">
-                        Get Started
-                    </x-ui.button>
-                @endguest
-            </div>
-
-            <div class="flex items-center sm:hidden">
-                <button @click="open = !open" type="button" class="p-2 rounded-ui-lg text-muted dark:text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-150">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': !open}" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': !open, 'inline-flex': open}" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div :class="{'block': open, 'hidden': !open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1 px-4">
-            <x-responsive-nav-link :href="route('courses')" :active="request()->routeIs('courses')" wire:navigate>
-                {{ __('Courses') }}
-            </x-responsive-nav-link>
-        </div>
-
-        @auth
-            <div class="pt-4 pb-1 border-t border-border dark:border-border-dark">
-                <div class="px-4">
-                    <div class="font-medium text-ui-base text-foreground dark:text-foreground-dark"
-                        x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name"
-                        x-on:profile-updated.window="name = $event.detail.name"></div>
-                    <div class="font-medium text-ui-sm text-muted dark:text-muted-dark">{{ auth()->user()->email }}</div>
-                </div>
-
-                <div class="mt-3 space-y-1 px-4">
-                    <x-responsive-nav-link :href="route('profile')" wire:navigate>
-                        {{ __('Profile') }}
-                    </x-responsive-nav-link>
-                    <button wire:click="logout" class="w-full text-start">
-                        <x-responsive-nav-link>
-                            {{ __('Log Out') }}
-                        </x-responsive-nav-link>
+                <div x-data="{ open: false }" class="relative" @click.outside="open = false">
+                    <button @click="open = !open" type="button" class="flex items-center gap-2 p-1 rounded-ui-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-150">
+                        <x-ui.avatar src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&color=7c3aed&background=EDE9FE" size="sm" />
+                        <span class="hidden lg:block text-start">
+                            <span class="block text-ui-sm font-medium text-foreground dark:text-foreground-dark leading-tight">{{ auth()->user()->name }}</span>
+                            <span class="block text-ui-xs text-muted dark:text-muted-dark leading-tight">Peserta</span>
+                        </span>
+                        <x-ui.icon name="chevron-down" size="xs" class="hidden lg:block text-muted dark:text-muted-dark" x-bind:class="{'rotate-180': open}" />
                     </button>
+                    <div x-show="open" x-cloak x-transition:enter="transition-all duration-150 ease-out" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-all duration-100 ease-in" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 top-full mt-2 w-56 z-50 rounded-ui-xl bg-white dark:bg-surface-dark ring-1 ring-black/5 dark:ring-white/10 shadow-lg" @click="open = false">
+                        <div class="py-1">
+                            <div class="flex items-center gap-2.5 px-4 py-2.5 text-ui-sm font-semibold text-foreground dark:text-foreground-dark">
+                                <i class="za-share-duotone w-4 h-4"></i>
+                                Eduno package
+                            </div>
+                            <div class="border-t border-border dark:border-border-dark my-1"></div>
+                            <x-ui.dropdown-item href="{{ route('profile') }}" icon="settings" wire:navigate>Pengaturan</x-ui.dropdown-item>
+                            <div class="border-t border-border dark:border-border-dark my-1"></div>
+                            <x-ui.dropdown-item icon="arrow-right" variant="danger" wire:click="logout">Keluar</x-ui.dropdown-item>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        @endauth
+            @endauth
 
-        @guest
-            <div class="pt-4 pb-1 border-t border-border dark:border-border-dark">
-                <div class="mt-3 space-y-1 px-4">
-                    <x-responsive-nav-link :href="route('login')" wire:navigate>
-                        {{ __('Sign In') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('register')" wire:navigate>
-                        {{ __('Register') }}
-                    </x-responsive-nav-link>
+            @guest
+                <x-ui.button href="{{ route('login') }}" variant="ghost" size="sm">Sign In</x-ui.button>
+                <x-ui.button href="{{ route('register') }}" size="sm">Get Started</x-ui.button>
+            @endguest
+
+            <div x-data="{ mobileOpen: false }" class="md:hidden relative">
+                <button @click="mobileOpen = !mobileOpen" type="button" class="p-2 rounded-ui-xl text-muted dark:text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all duration-150">
+                    <i class="za-menu-bars-duotone h-6 w-6" :class="{'hidden': mobileOpen, 'inline-flex': !mobileOpen}"></i>
+                    <i class="za-xmark-duotone h-6 w-6" :class="{'hidden': !mobileOpen, 'inline-flex': mobileOpen}"></i>
+                </button>
+                <div x-show="mobileOpen" x-cloak x-transition:enter="transition-all duration-200 ease-out" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-all duration-150 ease-in" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="fixed right-4 top-16 mt-1 w-64 bg-white dark:bg-surface-dark rounded-ui-xl ring-1 ring-black/5 dark:ring-white/10 shadow-lg z-50" @click.outside="mobileOpen = false" @click="mobileOpen = false">
+                    <div class="py-1">
+                        <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-foreground dark:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg">
+                            <span class="inline-flex items-center">
+                                <i class="za-house-duotone w-[18px] h-[18px]"></i>
+                            </span>
+                            Beranda
+                        </a>
+                        @auth
+                            <div class="border-t border-border dark:border-border-dark my-1"></div>
+                            <a href="{{ route('profile') }}" wire:navigate class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-foreground dark:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg">
+                                <x-ui.icon name="user" size="sm" class="text-muted dark:text-muted-dark" />
+                                Profile
+                            </a>
+                            <div class="border-t border-border dark:border-border-dark my-1"></div>
+                            <button wire:click="logout" class="flex items-center gap-3 w-full px-4 py-2.5 text-ui-sm font-medium text-danger hover:bg-danger-light dark:hover:bg-danger/20 rounded-ui-lg">
+                                <x-ui.icon name="arrow-right" size="sm" />
+                                Keluar
+                            </button>
+                        @endauth
+                    </div>
                 </div>
             </div>
-        @endguest
+        </div>
     </div>
-</nav>
+</header>

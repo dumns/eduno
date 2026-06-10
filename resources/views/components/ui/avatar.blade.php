@@ -43,9 +43,7 @@
     @elseif ($initials)
         <span>{{ $initials }}</span>
     @else
-        <svg class="h-1/2 w-1/2 text-current opacity-60" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-        </svg>
+        <i class="za-user-duotone h-1/2 w-1/2 text-current opacity-60"></i>
     @endif
 
     @if ($status)

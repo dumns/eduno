@@ -19,7 +19,7 @@
     ];
 @endphp
 
-<div class="relative p-5 sm:p-6 bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-2xl shadow-sm hover:shadow-ui-md transition-all duration-200 {{ $class }}"
+<div class="relative p-5 sm:p-6 bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-2xl transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50 {{ $class }}"
     {{ $attributes->except(['class', 'title', 'value', 'icon', 'trend', 'trendType', 'variant']) }}>
     <div class="flex items-start justify-between">
         <div class="flex-1 min-w-0">

@@ -27,7 +27,7 @@
             </div>
 
             <div class="w-full sm:max-w-md">
-                <div class="bg-white dark:bg-surface-dark border border-border dark:border-border-dark shadow-ui-lg rounded-ui-2xl px-6 py-8 sm:px-8">
+                <div class="bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-2xl px-6 py-8 sm:px-8">
                     {{ $slot }}
                 </div>
             </div>

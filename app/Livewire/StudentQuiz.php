@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-
 use Livewire\Component;
 use App\Models\Quiz;
 use App\Models\Question;
@@ -33,6 +32,41 @@ class StudentQuiz extends Component
             $this->finished = true;
             $this->score = $this->calculateScore();
         }
+    }
+
+    public function previousQuestion()
+    {
+        if ($this->current > 0) {
+            $this->current--;
+        }
+    }
+
+    public function nextQuestion()
+    {
+        if ($this->current < count($this->questions) - 1) {
+            $this->current++;
+        }
+    }
+
+    public function goToQuestion($index)
+    {
+        if ($index >= 0 && $index < count($this->questions)) {
+            $this->current = $index;
+        }
+    }
+
+    public function resetQuiz()
+    {
+        $this->current = 0;
+        $this->answers = [];
+        $this->finished = false;
+        $this->score = null;
+    }
+
+    public function finishQuiz()
+    {
+        $this->finished = true;
+        $this->score = $this->calculateScore();
     }
 
     public function calculateScore()

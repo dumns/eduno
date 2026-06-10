@@ -3,123 +3,19 @@
 namespace App\Livewire;
 
 use App\Models\Course;
-use App\Models\Episode;
-use Filament\Actions\Concerns\InteractsWithActions;
-use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Infolists\Concerns\InteractsWithInfolists;
-use Filament\Infolists\Contracts\HasInfolists;
-use Filament\Infolists\Infolist;
-use Filament\Infolists;
-use Filament\Infolists\Components\TextEntry;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
 use Livewire\Component;
 
-class ShowCourse extends Component implements HasInfolists, HasForms
+class ShowCourse extends Component
 {
-    use InteractsWithInfolists, InteractsWithForms;
-
     public Course $course;
 
     public function mount(Course $course)
     {
         $this->course = $course;
         $this->course->loadCount('episodes');
+        $this->course->loadSum('episodes', 'length_in_minutes');
+        $this->course->load(['episodes' => fn($q) => $q->orderBy('sort')]);
         $this->course->load(['quizzes' => fn($q) => $q->withCount('questions')]);
-    }
-
-    public function courseInfolist(Infolist $infolist): Infolist
-    {
-        return $infolist
-            ->record($this->course)
-            ->schema([
-                // Section utama (atas)
-                Infolists\Components\Section::make()
-                    ->schema([
-                        InfoLists\Components\TextEntry::make('tags.name')
-                            ->hiddenLabel()
-                            ->badge(),
-                        Infolists\Components\TextEntry::make('title')
-                            ->hiddenLabel()
-                            ->size('text-4xl')
-                            ->weight('font-bold')
-                            ->columnSpanFull(),
-                        Infolists\Components\TextEntry::make('tagline')
-                            ->hiddenLabel()
-                            ->columnSpanFull(),
-                        Infolists\Components\Fieldset::make('')
-                            ->columns(3)
-                            ->columnSpan(1)
-                            ->schema([
-                                Infolists\Components\TextEntry::make('episodes_count')
-                                    ->hiddenLabel()
-                                    ->formatStateUsing(fn($state) => "$state episodes")
-                                    ->icon('heroicon-o-film'),
-                                Infolists\Components\TextEntry::make('formatted_length')
-                                    ->hiddenLabel()
-                                    ->icon('heroicon-o-clock'),
-                                Infolists\Components\TextEntry::make('created_at')
-                                    ->hiddenLabel()
-                                    ->formatStateUsing(fn($state) => $state->diffForHumans())
-                                    ->icon('heroicon-o-calendar'),
-                            ])
-                            ->extraAttributes(['class' => 'border-none !p-0']),
-                        Infolists\Components\Actions::make([
-                            Infolists\Components\Actions\Action::make('watch')
-                                ->label(fn(Course $record) => auth()->user()?->courses->contains($record) ? 'Continue Watching' : 'Start Watching')
-                                ->button()
-                                ->icon('heroicon-o-play-circle')
-                                ->action(fn(Course $record) => $this->redirectRoute('courses.episodes.show', ['course' => $record]))
-                        ])
-                            ->columnSpanFull()
-                    ])
-                    ->columns(2),
-
-                // Section About this course (hanya deskripsi)
-                Infolists\Components\Section::make('About this course')
-                    ->columns(1)
-                    ->schema([
-                        Infolists\Components\TextEntry::make('description')
-                            ->columnSpanFull(),
-                    ]),
-
-                // Card Episodes
-                Infolists\Components\Section::make('Course Episodes')
-                    ->columns(1)
-                    ->schema([
-                        Infolists\Components\RepeatableEntry::make('episodes')
-                            ->schema([
-                                Infolists\Components\TextEntry::make('title')
-                                    ->hiddenLabel()
-                                    ->icon('heroicon-o-play-circle')
-                                    ->url(fn(Episode $record) => route('courses.episodes.show', ['course' => $record->course->getRouteKey(), 'episode' => $record->getRouteKey()])),
-                                Infolists\Components\TextEntry::make('formatted_length')
-                                    ->hiddenLabel()
-                                    ->icon('heroicon-o-clock'),
-                            ])
-                            ->columns(2),
-                    ]),
-
-                // Card Quiz (jika ada relasi quiz, tampilkan di sini)
-                Infolists\Components\Section::make('Course Quizzes')
-                    ->columns(1)
-                    ->schema([
-                        Infolists\Components\RepeatableEntry::make('quizzes')
-                            ->schema([
-                                Infolists\Components\TextEntry::make('title')
-                                    ->hiddenLabel()
-                                    ->icon('heroicon-o-question-mark-circle')
-                                    ->url(fn($record) => route('quiz.student', ['quiz' => $record->getRouteKey()])),
-                                Infolists\Components\TextEntry::make('questions_count')
-                                    ->hiddenLabel()
-                                    ->icon('heroicon-o-list-bullet')
-                                    ->formatStateUsing(fn($state) => "$state questions"),
-                            ])
-                            ->columns(2),
-                    ]),
-            ]);
     }
 
     public function render()

@@ -3,87 +3,67 @@
 namespace App\Livewire;
 
 use App\Models\Course;
-use Filament\Forms\Components\CheckboxList;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Support\Enums\IconPosition;
-use Filament\Tables\Concerns\InteractsWithTable;
-use Filament\Tables\Contracts\HasTable;
-use Filament\Tables\Table;
-use Filament\Tables;
-use Illuminate\Contracts\Database\Query\Builder;
-use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\Tag;
 use Livewire\Component;
-use Illuminate\Support\Str;
+use Livewire\WithPagination;
 
-class CourseList extends Component implements HasForms, HasTable
+class CourseList extends Component
 {
-    use InteractsWithForms, InteractsWithTable;
+    use WithPagination;
 
-    public Collection $courses;
+    public $search = '';
+    public $selectedTags = [];
+    public $perPage = 12;
 
-    public function mount()
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'selectedTags' => ['except' => []],
+    ];
+
+    public function updatingSearch()
     {
-        $this->courses = Course::all();
+        $this->resetPage();
     }
 
-    public function table(Table $table): Table
+    public function updatingSelectedTags()
     {
-        return $table
-            ->query(Course::query()->withCount('episodes'))
-            ->contentGrid([
-                'md' => 2,
-                'lg' => 3
-            ])
-            ->filters([
-                Tables\Filters\SelectFilter::make('tags')
-                    ->multiple()->preload()
-                    ->searchable()
-                    ->relationship('tags', 'name')
-            ], layout: Tables\Enums\FiltersLayout::Dropdown)
-            ->columns([
-                Tables\Columns\Layout\Stack::make([
-                    Tables\Columns\TextColumn::make('tags.name')
-                        ->searchable()
-                        ->badge(),
-                    Tables\Columns\TextColumn::make('title')
-                        ->searchable()
-                        ->weight('font-bold')
-                        ->color('gray'),
-                    Tables\Columns\TextColumn::make('tagline')
-                        ->size('text-xs')
-                        ->color('gray'),
-                    Tables\Columns\Layout\Split::make([
-                        Tables\Columns\TextColumn::make('episodes_count')
-                            ->formatStateUsing(fn($state) => $state . ' ' . Str::plural('episode', $state))
-                            ->size('text-[0.7rem]')
-                            ->color('gray')
-                            ->icon('heroicon-o-film'),
-                        Tables\Columns\TextColumn::make('formatted_length')
-                            ->size('text-[0.7rem]')
-                            ->color('gray')
-                            ->icon('heroicon-o-clock'),
-                    ])
-                ])->space(3)
-            ])
-            ->actions([
-                Tables\Actions\Action::make('Start Watching')
-                    ->url(fn(Course $record): string => route('courses.show', ['course' => $record]))
-                    ->button()
-                    ->icon('heroicon-o-play-circle')
-                    ->iconPosition(IconPosition::After)
-                    ->extraAttributes(['class' => 'w-full'])
-            ]);
+        $this->resetPage();
     }
 
-    protected function paginateTableQuery(Builder $query): Paginator
+    public function toggleTag($tagId)
     {
-        return $query->simplePaginate(($this->getTableRecordsPerPage() === 'all') ? $query->count() : $this->getTableRecordsPerPage());
+        if (in_array($tagId, $this->selectedTags)) {
+            $this->selectedTags = array_values(array_diff($this->selectedTags, [$tagId]));
+        } else {
+            $this->selectedTags[] = $tagId;
+        }
+        $this->resetPage();
     }
 
     public function render()
     {
-        return view('livewire.course-list');
+        $query = Course::query()
+            ->withCount('episodes')
+            ->withSum('episodes', 'length_in_minutes')
+            ->with(['tags']);
+
+        if ($this->search) {
+            $query->where(function ($q) {
+                $q->where('title', 'like', '%' . $this->search . '%')
+                  ->orWhere('tagline', 'like', '%' . $this->search . '%');
+            });
+        }
+
+        if (!empty($this->selectedTags)) {
+            $query->whereHas('tags', fn($q) => $q->whereIn('tags.id', $this->selectedTags));
+        }
+
+        $courses = $query->orderBy('created_at', 'desc')->paginate($this->perPage);
+        $allTags = Tag::all();
+
+        return view('livewire.course-list', [
+            'courses' => $courses,
+            'allTags' => $allTags,
+        ]);
     }
 }
