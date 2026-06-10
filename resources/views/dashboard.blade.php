@@ -231,7 +231,7 @@
                                 <div class="p-4 space-y-2.5 flex-1">
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-user-duotone w-3.5 h-3.5 flex-shrink-0"></i>
-                                        <span>Dosen {{ $course['lecturer'] }} <span class="text-primary hover:underline cursor-pointer">dan {{ $course['others'] }} lainnya</span></span>
+                                        <span>Dosen {{ $course['lecturer'] }} <x-ui.tooltip text="{{ $course['others'] }} dosen lain mengajar kelas ini" position="top" class="inline"><span class="text-primary hover:underline cursor-pointer">dan {{ $course['others'] }} lainnya</span></x-ui.tooltip></span>
                                     </div>
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-calendar-duotone w-3.5 h-3.5 flex-shrink-0"></i>
@@ -344,7 +344,7 @@
                                 <div class="p-4 space-y-2.5 flex-1">
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-user-duotone w-3.5 h-3.5 flex-shrink-0"></i>
-                                        <span>Dosen {{ $course['lecturer'] }} <span class="text-primary hover:underline cursor-pointer">dan {{ $course['others'] }} lainnya</span></span>
+                                        <span>Dosen {{ $course['lecturer'] }} <x-ui.tooltip text="{{ $course['others'] }} dosen lain mengajar kelas ini" position="top" class="inline"><span class="text-primary hover:underline cursor-pointer">dan {{ $course['others'] }} lainnya</span></x-ui.tooltip></span>
                                     </div>
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-calendar-duotone w-3.5 h-3.5 flex-shrink-0"></i>

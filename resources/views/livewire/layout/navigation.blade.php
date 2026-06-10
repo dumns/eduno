@@ -65,19 +65,23 @@ new class extends Component {
 
         <div class="flex items-center justify-end gap-2">
             @auth
-                <a href="#" class="hidden xl:inline-flex items-center justify-center w-10 h-10 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-ui-lg transition-all duration-150" title="Support">
-                    <i class="za-life-ring-duotone w-5 h-5"></i>
-                </a>
+                <x-ui.tooltip text="Support" position="bottom" class="hidden xl:inline-flex">
+                    <a href="#" class="inline-flex items-center justify-center w-10 h-10 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-ui-lg transition-all duration-150">
+                        <i class="za-life-ring-duotone w-5 h-5"></i>
+                    </a>
+                </x-ui.tooltip>
 
-                <x-ui.dropdown align="right" width="64">
-                    <x-slot name="trigger">
-                        <button type="button" class="relative inline-flex items-center justify-center w-10 h-10 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-ui-lg transition-all duration-150">
-                            <x-ui.icon name="bell" size="sm" />
-                            <span class="absolute top-2 right-2 w-2 h-2 bg-danger rounded-full"></span>
-                        </button>
-                    </x-slot>
+                <x-ui.tooltip text="Notifikasi" position="bottom">
+                    <x-ui.dropdown align="right" width="64">
+                        <x-slot name="trigger">
+                            <button type="button" class="relative inline-flex items-center justify-center w-10 h-10 text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-ui-lg transition-all duration-150">
+                                <x-ui.icon name="bell" size="sm" />
+                                <span class="absolute top-2 right-2 w-2 h-2 bg-danger rounded-full"></span>
+                            </button>
+                        </x-slot>
                     <div class="px-4 py-3 text-ui-sm text-muted dark:text-muted-dark text-center">Tidak ada notifikasi</div>
                 </x-ui.dropdown>
+                </x-ui.tooltip>
 
                 <div x-data="{ open: false }" class="relative" @click.outside="open = false">
                     <button @click="open = !open" type="button" class="flex items-center gap-2 p-1.5 rounded-ui-xl hover:bg-primary-light/50 dark:hover:bg-primary-dark/20 hover:ring-2 hover:ring-primary/30 transition-all duration-150">
