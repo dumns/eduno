@@ -12,7 +12,7 @@ new class extends Component {
 }; ?>
 
 <header class="sticky top-0 z-50 bg-white dark:bg-surface-dark border-b border-border dark:border-border-dark">
-    <div class="grid grid-cols-2 md:grid-cols-3 items-center h-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-3 items-center h-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-start">
             <div class="flex items-center gap-2.5">
                 <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center">
@@ -121,35 +121,17 @@ new class extends Component {
                     <i class="za-menu-bars-duotone h-6 w-6" :class="{'hidden': mobileOpen, 'inline-flex': !mobileOpen}"></i>
                     <i class="za-xmark-duotone h-6 w-6" :class="{'hidden': !mobileOpen, 'inline-flex': mobileOpen}"></i>
                 </button>
-                <div x-show="mobileOpen" x-cloak x-transition:enter="transition-all duration-200 ease-out" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-all duration-150 ease-in" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="fixed left-4 right-4 top-16 mt-1 bg-white dark:bg-surface-dark rounded-ui-xl ring-1 ring-black/5 dark:ring-white/10 shadow-lg z-50" @click.outside="mobileOpen = false">
+                <div x-show="mobileOpen" x-cloak x-transition:enter="transition-all duration-200 ease-out" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-all duration-150 ease-in" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="fixed right-4 top-16 mt-1 w-64 bg-white dark:bg-surface-dark rounded-ui-xl ring-1 ring-black/5 dark:ring-white/10 shadow-lg z-50" @click.outside="mobileOpen = false" @click="mobileOpen = false">
                     <div class="py-1">
-                        <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-foreground dark:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg" @click="mobileOpen = false">
+                        <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-foreground dark:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg">
                             <span class="inline-flex items-center">
                                 <i class="za-house-duotone w-[18px] h-[18px]"></i>
                             </span>
                             Beranda
                         </a>
-                        <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-foreground dark:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg" @click="mobileOpen = false">
-                            <span class="inline-flex items-center">
-                                <i class="za-file-text-duotone w-[18px] h-[18px]"></i>
-                            </span>
-                            Timeline &amp; Berita
-                        </a>
-                        <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-foreground dark:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg" @click="mobileOpen = false">
-                            <span class="inline-flex items-center">
-                                <i class="za-chat-dots-duotone w-[18px] h-[18px]"></i>
-                            </span>
-                            Obrolan
-                        </a>
-                        <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-foreground dark:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg" @click="mobileOpen = false">
-                            <span class="inline-flex items-center">
-                                <i class="za-compass-duotone w-[18px] h-[18px]"></i>
-                            </span>
-                            Jelajah
-                        </a>
                         @auth
                             <div class="border-t border-border dark:border-border-dark my-1"></div>
-                            <a href="{{ route('profile') }}" wire:navigate class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-foreground dark:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg" @click="mobileOpen = false">
+                            <a href="{{ route('profile') }}" wire:navigate class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-foreground dark:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg">
                                 <x-ui.icon name="user" size="sm" class="text-muted dark:text-muted-dark" />
                                 Profile
                             </a>
