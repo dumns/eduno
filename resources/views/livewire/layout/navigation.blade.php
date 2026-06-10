@@ -33,9 +33,6 @@ new class extends Component {
                                 : 'text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800' }}">
                             <i class="za-house-duotone w-5 h-5"></i>
                             <span>Beranda</span>
-                            @if (request()->routeIs('dashboard'))
-                                <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-primary rounded-full"></span>
-                            @endif
                         </a>
                     </li>
                     <li>
@@ -114,8 +111,8 @@ new class extends Component {
             @endauth
 
             @guest
-                <x-ui.button href="{{ route('login') }}" variant="ghost" size="sm">Sign In</x-ui.button>
-                <x-ui.button href="{{ route('register') }}" size="sm">Get Started</x-ui.button>
+                <x-ui.button href="{{ route('login') }}" variant="ghost" size="sm">Masuk</x-ui.button>
+                <x-ui.button href="{{ route('register') }}" size="sm">Daftar</x-ui.button>
             @endguest
 
             <div x-data="{ mobileOpen: false }" class="md:hidden relative">
@@ -165,7 +162,7 @@ new class extends Component {
                                 class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg mx-2 transition-all duration-150"
                                 @click="mobileOpen = false">
                                 <x-ui.icon name="user" size="sm" class="text-muted dark:text-muted-dark" />
-                                Profile
+                                Pengaturan Akun
                             </a>
                             <button wire:click="logout"
                                 class="flex items-center gap-3 w-full px-4 py-2.5 text-ui-sm font-medium text-danger hover:bg-danger-light dark:hover:bg-danger/20 rounded-ui-lg mx-2 transition-all duration-150"
