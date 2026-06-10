@@ -1,9 +1,11 @@
 <div>
-    <div class="mx-auto max-w-2xl py-2 sm:py-4 lg:py-6">
-        <div class="text-center">
-            <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-6xl">Start Your Web Development Journey</h1>
-            <p class="mt-6 text-lg leading-8 text-gray-600">Dive into our library of courses designed for all skill levels, focusing on Laravel, Livewire, and Filament.</p>
-        </div>
+    <div class="max-w-3xl mx-auto py-8 sm:py-12 lg:py-16 text-center">
+        <x-ui.heading level="h1" size="4xl" class="mb-4">
+            Start Your Web Development Journey
+        </x-ui.heading>
+        <x-ui.text size="lg" color="muted" class="max-w-2xl mx-auto">
+            Dive into our library of courses designed for all skill levels, focusing on Laravel, Livewire, and Filament.
+        </x-ui.text>
     </div>
     {{ $this->table }}
 </div>
