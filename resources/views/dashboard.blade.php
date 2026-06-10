@@ -260,14 +260,14 @@
                 {{-- KELAS PERSONAL TAB CONTENT                                  --}}
                 {{-- ============================================================ --}}
                 <div x-show="tab === 'personal'" class="p-5 sm:p-6" style="display: none;">
-                    <div class="flex items-center justify-between mb-4">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
                         <div>
                             <x-ui.heading level="h3" size="lg">Kelas Personal</x-ui.heading>
                             <x-ui.text size="sm" color="muted">Anda dapat membuat atau mengikuti kelas personal</x-ui.text>
                         </div>
                         <div class="flex items-center gap-2">
                             <a href="#" class="inline-flex items-center gap-1.5 px-3 py-2 text-ui-sm font-medium rounded-ui-lg border border-border dark:border-border-dark text-foreground dark:text-foreground-dark bg-white dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                                <x-ui.icon name="plus" size="xs" />
+                                <x-ui.icon name="plus" size="sm" />
                                 <span>Ikuti kelas</span>
                             </a>
                             <x-ui.button href="#" variant="primary" size="sm" icon="plus">

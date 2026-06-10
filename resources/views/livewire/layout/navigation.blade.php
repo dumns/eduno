@@ -118,8 +118,8 @@ new class extends Component {
             <div x-data="{ mobileOpen: false }" class="md:hidden relative">
                 <button @click="mobileOpen = !mobileOpen" type="button"
                     class="p-2 rounded-ui-xl text-muted dark:text-muted-dark hover:text-primary dark:hover:text-primary-light hover:bg-primary/10 dark:hover:bg-primary-dark/20 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all duration-150">
-                    <i class="za-menu-bars-duotone h-6 w-6" :class="{'hidden': mobileOpen, 'inline-flex': !mobileOpen}"></i>
-                    <i class="za-xmark-duotone h-6 w-6" :class="{'hidden': !mobileOpen, 'inline-flex': mobileOpen}"></i>
+                    <i class="za-menu-bars h-6 w-6" :class="{'hidden': mobileOpen, 'inline-flex': !mobileOpen}"></i>
+                    <i class="za-xmark h-6 w-6" :class="{'hidden': !mobileOpen, 'inline-flex': mobileOpen}"></i>
                 </button>
                 <div x-show="mobileOpen" x-cloak
                     x-transition:enter="transition-all duration-200 ease-out"
