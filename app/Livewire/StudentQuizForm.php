@@ -4,19 +4,12 @@ namespace App\Livewire;
 
 use App\Models\Quiz;
 use App\Models\QuizAnswer;
-use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
+use App\Models\QuizResult;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class StudentQuizForm extends Component implements HasForms
+class StudentQuizForm extends Component
 {
-    use InteractsWithForms;
-
     public Quiz $quiz;
     public array $questions = [];
     public array $answers = [];
@@ -29,7 +22,7 @@ class StudentQuizForm extends Component implements HasForms
         $this->questions = $quiz->questions()->with('options')->get()->toArray();
 
         $userId = Auth::id();
-        // Cek apakah user sudah pernah submit quiz ini
+
         $alreadySubmitted = QuizAnswer::where('quiz_id', $quiz->id)
             ->where('user_id', $userId)
             ->where('is_submitted', true)
@@ -40,7 +33,6 @@ class StudentQuizForm extends Component implements HasForms
             return;
         }
 
-        // Load saved answers (jika belum submit)
         $saved = QuizAnswer::where('quiz_id', $quiz->id)
             ->where('user_id', $userId)
             ->where('is_submitted', false)
@@ -49,46 +41,20 @@ class StudentQuizForm extends Component implements HasForms
         foreach ($saved as $ans) {
             $this->answers['q_' . $ans->question_id] = $ans->answer;
         }
-
-        $this->form->fill($this->answers);
     }
 
-    public function form(Form $form): Form
+    public function updated($name, $value)
     {
-        $question = $this->questions[$this->current] ?? null;
-
-        if (!$question) {
-            return $form->schema([]);
+        if (str_starts_with($name, 'answers.')) {
+            $key = str_replace('answers.', '', $name);
+            $questionId = str_replace('q_', '', $key);
+            $this->autoSave((int) $questionId, $value);
         }
-
-        $schema = [
-            Placeholder::make('question_text')
-                ->label('Soal ' . ($this->current + 1) . ' dari ' . count($this->questions))
-                ->content($question['question']),
-        ];
-
-        if ($question['type'] === 'multiple_choice') {
-            $options = collect($question['options'])->pluck('option', 'option')->toArray();
-            $schema[] = Radio::make('q_' . $question['id'])
-                ->label('')
-                ->options($options)
-                ->live()
-                ->afterStateUpdated(fn($state) => $this->autoSave($question['id'], $state));
-        } elseif ($question['type'] === 'essay') {
-            $schema[] = Textarea::make('q_' . $question['id'])
-                ->label('')
-                ->rows(4)
-                ->live(onBlur: true)
-                ->afterStateUpdated(fn($state) => $this->autoSave($question['id'], $state));
-        }
-
-        return $form->schema($schema)->statePath('answers');
     }
 
     public function autoSave(int $questionId, ?string $value): void
     {
-        if (!Auth::check())
-            return;
+        if (!Auth::check()) return;
 
         QuizAnswer::updateOrCreate([
             'user_id' => Auth::id(),
@@ -104,7 +70,6 @@ class StudentQuizForm extends Component implements HasForms
     {
         if ($this->current < count($this->questions) - 1) {
             $this->current++;
-            $this->form->fill($this->answers);
         }
     }
 
@@ -112,34 +77,36 @@ class StudentQuizForm extends Component implements HasForms
     {
         if ($this->current > 0) {
             $this->current--;
-            $this->form->fill($this->answers);
         }
     }
 
     public function goTo(int $index): void
     {
-        $this->current = $index;
-        $this->form->fill($this->answers);
+        if ($index >= 0 && $index < count($this->questions)) {
+            $this->current = $index;
+        }
     }
 
     public function submitQuiz(): void
     {
         $userId = Auth::id();
+
         QuizAnswer::where('quiz_id', $this->quiz->id)
             ->where('user_id', $userId)
             ->update(['is_submitted' => true]);
 
-        // Hitung skor
         $questions = $this->quiz->questions()->with('options')->get();
         $score = 0;
         $maxScore = $questions->count();
+
         foreach ($questions as $q) {
             $ans = QuizAnswer::where('quiz_id', $this->quiz->id)
                 ->where('user_id', $userId)
                 ->where('question_id', $q->id)
                 ->first();
-            if (!$ans)
-                continue;
+
+            if (!$ans) continue;
+
             if ($q->type === 'multiple_choice') {
                 $correct = $q->options->where('is_correct', true)->pluck('id')->toArray();
                 if (in_array($ans->answer, $correct)) {
@@ -151,9 +118,10 @@ class StudentQuizForm extends Component implements HasForms
                 }
             }
         }
+
         $percentage = $maxScore > 0 ? ($score / $maxScore) * 100 : 0;
 
-        \App\Models\QuizResult::updateOrCreate(
+        QuizResult::updateOrCreate(
             [
                 'user_id' => $userId,
                 'quiz_id' => $this->quiz->id,

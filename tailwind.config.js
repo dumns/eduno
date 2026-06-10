@@ -1,6 +1,7 @@
 import preset from './vendor/filament/support/tailwind.config.preset'
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
+import { zappicon } from '@zappicon/tailwind';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -121,5 +122,59 @@ export default {
         },
     },
 
-    plugins: [forms],
+    safelist: [
+        // Ikon Zappicon yang dipanggil via x-ui:icon component (dynamic concat)
+        'za-search-duotone',
+        'za-plus-duotone',
+        'za-check-circle-duotone',
+        'za-angle-up-small-duotone',
+        'za-angle-left-small-duotone',
+        'za-angle-right-small-duotone',
+        'za-bell-duotone',
+        'za-filter-duotone',
+        'za-info-circle-duotone',
+        'za-clock-duotone',
+        'za-star-duotone',
+        'za-play-duotone',
+        'za-arrow-right-small-duotone',
+        'za-list-duotone',
+        'za-exclamation-triangle-duotone',
+        'za-xmark-circle-duotone',
+        'za-exclamation-circle-duotone',
+        'za-book-simple-duotone',
+        'za-pen-line-duotone',
+        'za-trash-duotone',
+        'za-eye-duotone',
+        'za-eye-slash-duotone',
+        'za-envelope-duotone',
+        'za-lock-simple-duotone',
+        'za-gear-duotone',
+        'za-download-bracket-duotone',
+        'za-upload-bracket-duotone',
+        'za-sort-duotone',
+        'za-link-simple-duotone',
+        'za-house-duotone',
+        'za-heart-simple-duotone',
+        'za-copy-duotone',
+        'za-credit-card-duotone',
+        'za-code-duotone',
+        'za-flask-duotone',
+        'za-arrows-rotate-duotone',
+        'za-image-duotone',
+        'za-camera-duotone',
+        'za-file-text-duotone',
+        'za-chat-dots-duotone',
+        'za-compass-duotone',
+        'za-life-ring-duotone',
+        'za-share-duotone',
+        'za-angle-down-small-duotone',
+        'za-file-text-duotone',
+        'za-check-list-duotone',
+        'za-user-duotone',
+        'za-calendar-duotone',
+        'za-users-duotone',
+        'za-book-simple-duotone',
+    ],
+
+    plugins: [forms, zappicon({ prefix: 'za', size: '1em', color: 'currentColor' })],
 };

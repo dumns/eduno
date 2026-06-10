@@ -28,9 +28,9 @@
         @if ($trigger)
             {{ $trigger }}
         @else
-            <button type="button" class="inline-flex items-center gap-2 px-3 py-2 text-ui-sm font-medium text-foreground dark:text-foreground-dark bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-lg hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-150">
+            <button type="button" class="inline-flex items-center gap-2 px-3 py-2 text-ui-sm font-medium text-foreground dark:text-foreground-dark rounded-ui-xl hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all duration-150">
                 {{ $slot }}
-                <x-ui.icon name="chevron-down" size="xs" />
+                <x-ui.icon name="chevron-down" size="xs" class="text-muted dark:text-muted-dark" />
             </button>
         @endif
     </div>
@@ -42,9 +42,11 @@
         x-transition:leave="transition-all duration-100 ease-in"
         x-transition:leave-start="opacity-100 scale-100"
         x-transition:leave-end="opacity-0 scale-95"
-        class="absolute z-50 mt-2 {{ $alignmentClasses }} {{ $widthClasses }} rounded-ui-xl bg-white dark:bg-surface-dark shadow-ui-lg ring-1 ring-black/5 dark:ring-white/10 {{ $contentClasses }}"
+        class="absolute z-50 mt-1 {{ $alignmentClasses }} {{ $widthClasses }} rounded-ui-xl bg-white dark:bg-surface-dark ring-1 ring-black/5 dark:ring-white/10 {{ $contentClasses }}"
         @click="open = false"
         style="display: none;">
-        {{ $slot }}
+        <div class="py-1">
+            {{ $slot }}
+        </div>
     </div>
 </div>

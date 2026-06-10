@@ -280,39 +280,7 @@ Paragraf dan text content dengan styling.
 | `align` | string | `null` | left, center, right |
 | `leading` | string | `null` | none, tight, snug, normal, relaxed, loose |
 
----
 
-## Icon
-
-30+ Heroicons built-in tanpa dependensi eksternal.
-
-### Usage
-
-```blade
-{{-- Basic --}}
-<x-ui.icon name="search" />
-
-{{-- Size --}}
-<x-ui.icon name="search" size="xs" />
-<x-ui.icon name="search" size="sm" />
-<x-ui.icon name="search" size="md" />
-<x-ui.icon name="search" size="lg" />
-<x-ui.icon name="search" size="xl" />
-<x-ui.icon name="search" size="2xl" />
-```
-
-### Available Icons
-
-| Kategori | Icons |
-|----------|-------|
-| Navigation | home, menu, close, chevron-down, chevron-up, chevron-left, chevron-right, search |
-| Actions | edit, trash, plus, check, close, copy, share, download, upload, filter, sort, settings |
-| Auth | user, mail, lock, eye, eye-off |
-| Notifications | bell, info, alert-triangle, alert-circle, check-circle, x-circle, check-badge |
-| Media | play, image, camera, book, star, heart, calendar, clock |
-| Commerce | credit-card, external-link |
-
----
 
 ## Label
 
@@ -379,3 +347,111 @@ Input pilihan dengan styling konsisten.
 | `checked` | bool | `false` |
 | `disabled` | bool | `false` |
 | `model` | string | `null` |
+
+---
+
+## Icon
+
+Komponen ikon universal menggunakan **Zappicon** (`@zappicon/tailwind`). Semua ikon menggunakan `mask-image` CSS — warna dikontrol via `text-*` utilities.
+
+### Default Variant
+
+Semua ikon menggunakan varian **`duotone`** secara default untuk konsistensi visual.
+
+### Usage
+
+```blade
+{{-- Basic --}}
+<x-ui.icon name="bell" />
+
+{{-- Dengan variant spesifik --}}
+<x-ui.icon name="house" variant="duotone" />
+<x-ui.icon name="user" variant="regular" />
+<x-ui.icon name="star" variant="filled" />
+
+{{-- Dengan size --}}
+<x-ui.icon name="search" size="sm" />
+<x-ui.icon name="book" size="lg" />
+<x-ui.icon name="check-circle" size="2xl" />
+
+{{-- Dengan class tambahan --}}
+<x-ui.icon name="close" size="sm" class="text-danger" />
+<x-ui.icon name="check" size="lg" class="text-success mx-auto" />
+
+{{-- Langsung tanpa component (untuk size non-standar) --}}
+<i class="za-calendar-duotone w-3.5 h-3.5 flex-shrink-0"></i>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `name` | string | `''` | Nama ikon (lihat mapping di bawah) |
+| `size` | string | `'md'` | `xs`, `sm`, `md`, `lg`, `xl`, `2xl` |
+| `variant` | string | `'duotone'` | `light`, `regular`, `filled`, `duotone`, `duotone-line` |
+| `class` | string | `''` | Class tambahan |
+
+### Size Mapping
+
+| Size | Class | Pixels |
+|------|-------|--------|
+| `xs` | `h-3 w-3` | 12px |
+| `sm` | `h-4 w-4` | 16px |
+| `md` | `h-5 w-5` | 20px |
+| `lg` | `h-6 w-6` | 24px |
+| `xl` | `h-8 w-8` | 32px |
+| `2xl` | `h-10 w-10` | 40px |
+
+### Icon Mapping
+
+Komponen menerjemahkan 46 alias nama ikon ke Zappicon equivalents:
+
+| Alias | Zappicon | Alias | Zappicon |
+|-------|----------|-------|----------|
+| `search` | `search` | `plus` | `plus` |
+| `edit` | `pen-line` | `trash` | `trash` |
+| `close` | `xmark` | `check` | `check-circle` |
+| `chevron-down` | `angle-down-small` | `chevron-up` | `angle-up-small` |
+| `chevron-left` | `angle-left-small` | `chevron-right` | `angle-right-small` |
+| `eye` | `eye` | `eye-off` | `eye-slash` |
+| `mail` | `envelope` | `lock` | `lock-simple` |
+| `user` | `user` | `settings` | `gear` |
+| `bell` | `bell` | `menu` | `menu-bars` |
+| `download` | `download-bracket` | `upload` | `upload-bracket` |
+| `filter` | `filter` | `sort` | `sort` |
+| `info` | `info-circle` | `alert-triangle` | `exclamation-triangle` |
+| `external-link` | `link-simple` | `home` | `house` |
+| `play` | `play` | `calendar` | `calendar` |
+| `clock` | `clock` | `star` | `star` |
+| `book` | `book-simple` | `check-circle` | `check-circle` |
+| `x-circle` | `xmark-circle` | `alert-circle` | `exclamation-circle` |
+| `image` | `image` | `camera` | `camera` |
+| `heart` | `heart-simple` | `share` | `share` |
+| `copy` | `copy` | `credit-card` | `credit-card` |
+| `check-badge` | `check-circle` | `arrow-right` | `arrow-right-small` |
+| `code-bracket` | `code` | `beaker` | `flask` |
+| `refresh` | `arrows-rotate` | `list-bullet` | `list` |
+
+### Direct `<i>` Usage (Non-standar Size)
+
+Untuk ukuran non-standar (misal `w-3.5 h-3.5` / 14px), gunakan tag `<i>` langsung:
+
+```blade
+<i class="za-calendar-duotone w-3.5 h-3.5 flex-shrink-0"></i>
+```
+
+Format class: `za-{zappicon-name}-{variant}` (daftar nama Zappicon lihat mapping di atas).
+
+### Tailwind Safelist
+
+Kelas Zappicon digenerate secara dinamis (`za-{{ $name }}-{{ $variant }}`) sehingga tidak terdeteksi oleh Tailwind JIT scanner. Seluruh kelas yang dipakai di-`safelist` di `tailwind.config.js`:
+
+```js
+safelist: [
+    'za-search-duotone',
+    'za-plus-duotone',
+    // ... 49 kelas total
+],
+```
+
+Jika ingin menambah ikon baru, daftarkan di `resources/views/components/ui/icon.blade.php` (mapping) dan `tailwind.config.js` (safelist).

@@ -54,9 +54,15 @@ new class extends Component
 
         <div class="flex items-center gap-4">
             <x-ui.button type="submit" size="md">Save</x-ui.button>
-            <x-action-message class="me-3" on="password-updated">
+            <div x-data="{ shown: false }"
+                 x-init="$wire.on('password-updated', () => { shown = true; setTimeout(() => shown = false, 2000); })"
+                 x-show="shown"
+                 x-transition:leave.opacity.duration.1500ms
+                 style="display: none;"
+                 class="flex items-center gap-1.5 text-ui-sm text-success">
+                <x-ui.icon name="check" size="xs" />
                 {{ __('Saved.') }}
-            </x-action-message>
+            </div>
         </div>
     </form>
 </section>

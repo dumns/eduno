@@ -14,11 +14,11 @@
     $baseClasses = 'inline-flex items-center justify-center font-semibold border border-transparent rounded-ui-lg focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-surface-dark transition-all duration-150 select-none';
 
     $variantClasses = [
-        'primary' => 'bg-primary text-white hover:bg-primary-hover focus:ring-primary active:bg-primary-dark shadow-sm',
-        'secondary' => 'bg-secondary text-white hover:bg-secondary-hover focus:ring-secondary shadow-sm',
-        'success' => 'bg-success text-white hover:bg-success-hover focus:ring-success shadow-sm',
-        'danger' => 'bg-danger text-white hover:bg-danger-hover focus:ring-danger shadow-sm',
-        'warning' => 'bg-warning text-white hover:bg-warning-hover focus:ring-warning shadow-sm',
+        'primary' => 'bg-primary text-white hover:bg-primary-hover focus:ring-primary active:bg-primary-dark',
+        'secondary' => 'bg-secondary text-white hover:bg-secondary-hover focus:ring-secondary',
+        'success' => 'bg-success text-white hover:bg-success-hover focus:ring-success',
+        'danger' => 'bg-danger text-white hover:bg-danger-hover focus:ring-danger',
+        'warning' => 'bg-warning text-white hover:bg-warning-hover focus:ring-warning',
         'outline' => 'bg-transparent text-primary border-primary hover:bg-primary-light dark:text-primary-light dark:border-primary-light dark:hover:bg-primary-dark/20 focus:ring-primary',
         'ghost' => 'bg-transparent text-foreground dark:text-foreground-dark hover:bg-gray-100 dark:hover:bg-gray-800 focus:ring-gray-400',
     ];

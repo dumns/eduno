@@ -17,7 +17,7 @@
             <livewire:layout.navigation />
 
             @if (isset($header))
-                <header class="bg-white dark:bg-surface-dark border-b border-border dark:border-border-dark shadow-sm">
+                <header class="bg-white dark:bg-surface-dark border-b border-border dark:border-border-dark">
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
                         {{ $header }}
                     </div>

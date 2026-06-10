@@ -22,7 +22,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/courses', CourseList::class)->name('courses');
+Route::get('/courses', function () {
+    return redirect()->route('dashboard');
+})->name('courses');
 Route::get('/courses/{course}', ShowCourse::class)->name('courses.show');
 
 // Route::get('/pricing', Pricing::class)->name('pricing');
@@ -40,6 +42,8 @@ Route::view('/', 'welcome');
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
