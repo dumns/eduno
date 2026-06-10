@@ -1,11 +1,4 @@
 <x-ui.layouts.app>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <x-ui.heading level="h1" size="xl">Dashboard</x-ui.heading>
-            <x-ui.text size="sm" color="muted">{{ now()->format('l, F j, Y') }}</x-ui.text>
-        </div>
-    </x-slot>
-
     @php
         $today = now();
         $startOfWeek = $today->copy()->startOfWeek();
