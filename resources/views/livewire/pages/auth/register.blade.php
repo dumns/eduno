@@ -35,7 +35,10 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <x-ui.heading level="h2" size="xl" class="mb-6">Create Account</x-ui.heading>
+    <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold text-foreground dark:text-foreground-dark">Create Account</h2>
+        <p class="text-ui-sm text-muted dark:text-muted-dark mt-1">Start your learning journey today</p>
+    </div>
 
     <form wire:submit="register" class="space-y-5">
         <x-ui.form-group label="Name" name="name" :error="$errors->first('name')" required>
@@ -54,14 +57,15 @@ new #[Layout('layouts.guest')] class extends Component
             <x-ui.input type="password" name="password_confirmation" wire:model="password_confirmation" placeholder="Repeat your password" required autocomplete="new-password" />
         </x-ui.form-group>
 
-        <div class="flex items-center justify-end gap-4">
-            <a href="{{ route('login') }}" wire:navigate class="text-ui-sm font-medium text-primary hover:text-primary-hover transition-colors duration-150">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-ui.button type="submit" size="md">
-                {{ __('Register') }}
-            </x-ui.button>
-        </div>
+        <x-ui.button type="submit" size="md" class="w-full justify-center">
+            {{ __('Create Account') }}
+        </x-ui.button>
     </form>
+
+    <p class="mt-6 text-center text-ui-sm text-muted dark:text-muted-dark">
+        {{ __('Already have an account?') }}
+        <a href="{{ route('login') }}" wire:navigate class="font-semibold text-primary hover:text-primary-hover transition-colors duration-150">
+            {{ __('Sign in') }}
+        </a>
+    </p>
 </div>

@@ -37,7 +37,7 @@ Route::get('/courses/{course}/episodes/{episode?}', WatchEpisode::class)
 
 Route::get('/quiz/{quiz}', StudentQuizForm::class)->middleware(['auth'])->name('quiz.student');
 
-Route::view('/', 'welcome');
+Route::redirect('/', '/login');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

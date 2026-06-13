@@ -15,16 +15,16 @@
         @filamentStyles
         @vite('resources/css/app.css')
     </head>
-    <body class="font-sans antialiased bg-surface dark:bg-background-dark text-foreground dark:text-foreground-dark">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 px-4">
-            <div class="mb-6 sm:mb-8">
-                <a href="/" wire:navigate class="flex items-center justify-center">
-                    <x-application-logo class="h-10 w-auto" />
-                </a>
-            </div>
+    <body class="font-sans antialiased bg-gradient-to-br from-surface to-gray-50 dark:from-background-dark dark:to-gray-900 text-foreground dark:text-foreground-dark">
+        <div class="min-h-screen flex flex-col items-center justify-center px-4 py-8">
+            <div class="w-full max-w-md">
+                <div class="flex justify-center mb-8">
+                    <a href="/" wire:navigate>
+                        <x-application-logo class="h-10 w-auto" />
+                    </a>
+                </div>
 
-            <div class="w-full sm:max-w-md">
-                <div class="bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-2xl px-6 py-8 sm:px-8">
+                <div class="bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-2xl shadow-sm px-6 py-8 sm:px-8">
                     {{ $slot }}
                 </div>
             </div>
