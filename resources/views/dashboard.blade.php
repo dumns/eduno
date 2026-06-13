@@ -147,7 +147,7 @@
                         selectedYear: 'Semua',
                         courses: {{ $coursesJson }},
                         get years() {
-                            return ['Semua', ...new Set(this.courses.map(c => c.year))].sort();
+                            return ['Semua', ...[...new Set(this.courses.map(c => c.year))].sort()];
                         },
                         get filteredCourses() {
                             return this.courses.filter(c => {
