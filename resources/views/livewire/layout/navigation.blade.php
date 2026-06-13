@@ -149,19 +149,6 @@ new class extends Component {
                             Jelajah
                         </a>
                         @auth
-                            <div class="border-t border-border dark:border-border-dark my-2 mx-4"></div>
-                            <a href="{{ route('profile') }}" wire:navigate
-                                class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg mx-2 transition-all duration-150"
-                                @click="mobileOpen = false">
-                                <x-ui.icon name="user" size="sm" class="text-muted dark:text-muted-dark" />
-                                Pengaturan Akun
-                            </a>
-                            <button wire:click="logout"
-                                class="flex items-center gap-3 w-full px-4 py-2.5 text-ui-sm font-medium text-danger hover:bg-danger-light dark:hover:bg-danger/20 rounded-ui-lg mx-2 transition-all duration-150"
-                                style="width: calc(100% - 1rem);">
-                                <x-ui.icon name="arrow-right" size="sm" />
-                                Keluar
-                            </button>
                         @endauth
                     </div>
                 </div>
