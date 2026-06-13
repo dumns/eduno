@@ -107,8 +107,7 @@
         </x-ui.card>
         --}}
 
-        {{-- TODO: unhide when quizzes available --}}
-        {{-- Quizzes
+        {{-- Quizzes --}}
         @if($course->quizzes->count() > 0)
             <x-ui.card variant="default" padding="none" class="mb-6 overflow-hidden">
                 <x-slot:header>
@@ -138,6 +137,5 @@
                 </div>
             </x-ui.card>
         @endif
-        --}}
     </div>
 </div>
