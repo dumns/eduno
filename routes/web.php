@@ -51,6 +51,7 @@ Route::get('dashboard', function () {
         'code' => $c->code ?? '-',
         'instructor_name' => $c->instructor?->name ?? '-',
         'year' => $c->created_at->year,
+        'url' => route('courses.show', $c),
     ])->toJson();
 
     return view('dashboard', compact('courses', 'personalCourses', 'courseYears', 'coursesJson'));

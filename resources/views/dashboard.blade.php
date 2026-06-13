@@ -197,14 +197,14 @@
                     {{-- Course Cards (2-column grid) --}}
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <template x-for="course in filteredCourses" :key="course.id">
-                            <a href="#" class="flex flex-col bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl transition-all duration-200 hover:border-primary/30 hover:shadow-sm h-full">
+                            <a :href="course.url" class="flex flex-col bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl transition-all duration-200 hover:border-primary/30 hover:shadow-sm h-full">
                                 <div class="p-4 pb-0">
                                     <p class="text-ui-sm font-semibold text-foreground dark:text-foreground-dark hover:text-primary transition-colors leading-snug" x-text="course.title + ' (' + course.code + ')'"></p>
                                 </div>
                                 <div class="p-4 space-y-2.5 flex-1">
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-user-duotone w-3.5 h-3.5 flex-shrink-0"></i>
-                                        <span x-text="'Dosen ' + course.instructor_name"></span>
+                                        <span x-text="course.instructor_name"></span>
                                     </div>
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-calendar-duotone w-3.5 h-3.5 flex-shrink-0"></i>
@@ -277,7 +277,7 @@
                     {{-- Personal Course Cards (2-column grid) --}}
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         @forelse ($personalCourses as $course)
-                            <a href="#" class="flex flex-col bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl transition-all duration-200 hover:border-primary/30 hover:shadow-sm h-full">
+                            <a href="{{ route('courses.show', $course) }}" class="flex flex-col bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl transition-all duration-200 hover:border-primary/30 hover:shadow-sm h-full">
                                 <div class="flex flex-wrap items-center gap-x-2 gap-y-1 p-4 pb-0">
                                     <p class="text-ui-sm font-semibold text-foreground dark:text-foreground-dark hover:text-primary transition-colors leading-snug">{{ $course->title }} ({{ $course->code ?? '-' }})</p>
                                     <span class="inline-flex items-center px-2 py-0.5 text-ui-xs font-medium rounded-full bg-primary/10 text-primary">-</span>
@@ -285,7 +285,7 @@
                                 <div class="p-4 space-y-2.5 flex-1">
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-user-duotone w-3.5 h-3.5 flex-shrink-0"></i>
-                                        <span>Dosen {{ $course->instructor?->name ?? '-' }}</span>
+                                        <span>{{ $course->instructor?->name ?? '-' }}</span>
                                     </div>
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-calendar-duotone w-3.5 h-3.5 flex-shrink-0"></i>
