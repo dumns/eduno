@@ -141,36 +141,52 @@
                 {{-- ============================================================ --}}
                 {{-- COURSES TAB CONTENT                                          --}}
                 {{-- ============================================================ --}}
-                <div x-show="tab === 'courses'" class="p-5 sm:p-6">
+                <div x-show="tab === 'courses'" class="p-5 sm:p-6"
+                    x-data="{
+                        search: '',
+                        selectedYear: 'Semua',
+                        courses: {{ $coursesJson }},
+                        get years() {
+                            return ['Semua', ...[...new Set(this.courses.map(c => c.year))].sort()];
+                        },
+                        get filteredCourses() {
+                            return this.courses.filter(c => {
+                                const q = this.search.toLowerCase();
+                                const matchSearch = !q || c.title.toLowerCase().includes(q) || c.code.toLowerCase().includes(q) || c.instructor_name.toLowerCase().includes(q);
+                                const matchYear = this.selectedYear === 'Semua' || c.year == this.selectedYear;
+                                return matchSearch && matchYear;
+                            });
+                        }
+                    }">
                     <div class="flex items-center justify-between mb-4">
                         <div>
                             <x-ui.heading level="h3" size="lg">Courses</x-ui.heading>
-                            <x-ui.text size="sm" color="muted">Anda memiliki 4 kelas pada tahun ini</x-ui.text>
+                            <x-ui.text size="sm" color="muted" x-text="'Anda memiliki ' + filteredCourses.length + ' kelas'"></x-ui.text>
                         </div>
                     </div>
 
                     {{-- Search + Year Filter --}}
                     <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 mb-5">
                         <div class="sm:col-span-8">
-                            <div class="relative" x-data>
+                            <div class="relative">
                                 <x-ui.icon name="search" size="sm" class="absolute left-3 top-1/2 -translate-y-1/2 text-muted dark:text-muted-dark pointer-events-none" />
-                                <input type="text" placeholder="Cari berdasarkan nama kelas, kode kelas, atau nama pengajar"
+                                <input type="text" x-model="search" placeholder="Cari berdasarkan nama kelas, kode kelas, atau nama pengajar"
                                     class="block w-full pl-10 pr-3 py-2.5 text-ui-sm bg-gray-100 dark:bg-gray-800 border-none rounded-ui-xl placeholder-muted dark:placeholder-muted-dark text-foreground dark:text-foreground-dark focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all duration-150">
                             </div>
                         </div>
                         <div class="sm:col-span-4">
-                            <div x-data="{ open: false, selected: '2026' }" class="relative">
+                            <div x-data="{ open: false }" class="relative">
                                 <button @click="open = !open" type="button"
                                     class="flex items-center justify-between gap-2 w-full px-4 py-2.5 text-ui-sm bg-gray-100 dark:bg-gray-800 rounded-ui-xl text-foreground dark:text-foreground-dark focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all">
-                                    <span x-text="selected"></span>
+                                    <span x-text="selectedYear"></span>
                                     <x-ui.icon name="chevron-down" size="xs" class="text-muted dark:text-muted-dark flex-shrink-0" />
                                 </button>
                                 <div x-show="open" @click.outside="open = false"
                                     class="absolute right-0 top-full mt-1 w-full bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl shadow-ui-lg z-20 py-1" style="display: none;">
-                                    <template x-for="year in ['2026', '2025', '2024']" :key="year">
-                                        <button @click="selected = year; open = false" type="button"
+                                    <template x-for="year in years" :key="year">
+                                        <button @click="selectedYear = year; open = false" type="button"
                                             class="block w-full text-left px-4 py-2 text-ui-sm text-foreground dark:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                                            :class="selected === year ? 'font-semibold text-primary' : ''"
+                                            :class="selectedYear === year ? 'font-semibold text-primary' : ''"
                                             x-text="year"></button>
                                     </template>
                                 </div>
@@ -180,79 +196,32 @@
 
                     {{-- Course Cards (2-column grid) --}}
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        @php
-                            $courses = [
-                                [
-                                    'name' => 'Workshop Pemanfaatan Claude Design',
-                                    'code' => 'PD07',
-                                    'lecturer' => 'SU',
-                                    'others' => 2,
-                                    'other_names' => ['Melania Aldia Pitaloka', 'Yusika Intan Insiwi'],
-                                    'day' => 'Rabu',
-                                    'start' => '17:37',
-                                    'end' => '19:37',
-                                    'attended' => 0,
-                                    'total' => 1,
-                                ],
-                                [
-                                    'name' => 'Tryout Sertifikasi Product & Domain Knowledge SEVIMA',
-                                    'code' => 'SU64',
-                                    'lecturer' => 'SU',
-                                    'others' => 2,
-                                    'other_names' => ['Ahmad Fauzi', 'Siti Nurhaliza'],
-                                    'day' => 'Kamis',
-                                    'start' => '10:13',
-                                    'end' => '12:13',
-                                    'attended' => 0,
-                                    'total' => 3,
-                                ],
-                                [
-                                    'name' => 'Basic Architecture Product SEVIMA PLATFORM',
-                                    'code' => 'ENG49',
-                                    'lecturer' => 'SU',
-                                    'others' => 4,
-                                    'other_names' => ['Rina Wijaya', 'Bambang Suprapto', 'Dewi Lestari', 'Agus Hartono'],
-                                    'day' => 'Rabu',
-                                    'start' => '15:00',
-                                    'end' => '17:00',
-                                    'attended' => 1,
-                                    'total' => 1,
-                                ],
-                                [
-                                    'name' => 'Data Glossarium',
-                                    'code' => 'ENG46',
-                                    'lecturer' => 'SU',
-                                    'others' => 3,
-                                    'other_names' => ['Fitriani Rahmawati', 'Hendra Gunawan', 'Indah Permata Sari'],
-                                    'day' => 'Jumat',
-                                    'start' => '14:00',
-                                    'end' => '16:15',
-                                    'attended' => 0,
-                                    'total' => 1,
-                                ],
-                            ];
-                        @endphp
-
-                        @foreach ($courses as $course)
-                            <a href="#" class="flex flex-col bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl transition-all duration-200 hover:border-primary/30 hover:shadow-sm h-full">
+                        <template x-for="course in filteredCourses" :key="course.id">
+                            <a :href="course.url" class="flex flex-col bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl transition-all duration-200 hover:border-primary/30 hover:shadow-sm h-full">
                                 <div class="p-4 pb-0">
-                                    <p class="text-ui-sm font-semibold text-foreground dark:text-foreground-dark hover:text-primary transition-colors leading-snug">{{ $course['name'] }} ({{ $course['code'] }})</p>
+                                    <p class="text-ui-sm font-semibold text-foreground dark:text-foreground-dark hover:text-primary transition-colors leading-snug" x-text="course.title + ' (' + course.code + ')'"></p>
                                 </div>
                                 <div class="p-4 space-y-2.5 flex-1">
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-user-duotone w-3.5 h-3.5 flex-shrink-0"></i>
-                                        <span>Dosen {{ $course['lecturer'] }} <x-ui.tooltip text="{{ !empty($course['other_names']) ? implode('; ', $course['other_names']) : $course['others'] . ' dosen lain' }}" position="top" class="inline"><span class="text-primary hover:underline cursor-pointer">dan {{ $course['others'] }} lainnya</span></x-ui.tooltip></span>
+                                        <span x-text="course.instructor_name"></span>
                                     </div>
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-calendar-duotone w-3.5 h-3.5 flex-shrink-0"></i>
-                                        <span>{{ $course['day'] }}, {{ $course['start'] }} - {{ $course['end'] }}</span>
+                                        <span>-</span>
                                     </div>
                                 </div>
                                 <div class="px-4 pb-4 pt-3 border-t border-border dark:border-border-dark mt-auto">
-                                    <span class="text-ui-xs text-muted dark:text-muted-dark">Kehadiran: {{ $course['attended'] }} dari {{ $course['total'] }} sesi</span>
+                                    <span class="text-ui-xs text-muted dark:text-muted-dark">Kehadiran: 0 dari 0 sesi</span>
                                 </div>
                             </a>
-                        @endforeach
+                        </template>
+                        <template x-if="filteredCourses.length === 0">
+                            <div class="sm:col-span-2 flex flex-col items-center justify-center py-8 text-center">
+                                <i class="za-book-duotone text-5xl opacity-40 block mx-auto mb-3"></i>
+                                <p class="text-ui-sm text-muted dark:text-muted-dark">Tidak ada course yang cocok</p>
+                            </div>
+                        </template>
                     </div>
                 </div>
 
@@ -307,64 +276,36 @@
 
                     {{-- Personal Course Cards (2-column grid) --}}
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        @php
-                            $personalCourses = [
-                                [
-                                    'name' => 'Designer',
-                                    'code' => 'S0702',
-                                    'badge' => 'Kelas Umum',
-                                    'lecturer' => 'SU',
-                                    'others' => 2,
-                                    'other_names' => ['Rizky Pratama', 'Anisa Kusuma'],
-                                    'day' => 'Selasa',
-                                    'start' => '08:30',
-                                    'end' => '10:30',
-                                    'participants' => 12,
-                                    'attended' => 0,
-                                    'total' => 2,
-                                ],
-                                [
-                                    'name' => 'Workshop Advanced Design Pattern',
-                                    'code' => 'DES23',
-                                    'badge' => 'Kelas Umum',
-                                    'lecturer' => 'SU',
-                                    'others' => 1,
-                                    'other_names' => ['Dimas Prayoga'],
-                                    'day' => 'Selasa',
-                                    'start' => '09:00',
-                                    'end' => '11:00',
-                                    'participants' => 8,
-                                    'attended' => 1,
-                                    'total' => 1,
-                                ],
-                            ];
-                        @endphp
-
-                        @foreach ($personalCourses as $course)
-                            <a href="#" class="flex flex-col bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl transition-all duration-200 hover:border-primary/30 hover:shadow-sm h-full">
+                        @forelse ($personalCourses as $course)
+                            <a href="{{ route('courses.show', $course) }}" class="flex flex-col bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl transition-all duration-200 hover:border-primary/30 hover:shadow-sm h-full">
                                 <div class="flex flex-wrap items-center gap-x-2 gap-y-1 p-4 pb-0">
-                                    <p class="text-ui-sm font-semibold text-foreground dark:text-foreground-dark hover:text-primary transition-colors leading-snug">{{ $course['name'] }} ({{ $course['code'] }})</p>
-                                    <span class="inline-flex items-center px-2 py-0.5 text-ui-xs font-medium rounded-full bg-primary/10 text-primary">{{ $course['badge'] }}</span>
+                                    <p class="text-ui-sm font-semibold text-foreground dark:text-foreground-dark hover:text-primary transition-colors leading-snug">{{ $course->title }} ({{ $course->code ?? '-' }})</p>
+                                    <span class="inline-flex items-center px-2 py-0.5 text-ui-xs font-medium rounded-full bg-primary/10 text-primary">-</span>
                                 </div>
                                 <div class="p-4 space-y-2.5 flex-1">
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-user-duotone w-3.5 h-3.5 flex-shrink-0"></i>
-                                        <span>Dosen {{ $course['lecturer'] }} <x-ui.tooltip text="{{ !empty($course['other_names']) ? implode('; ', $course['other_names']) : $course['others'] . ' dosen lain' }}" position="top" class="inline"><span class="text-primary hover:underline cursor-pointer">dan {{ $course['others'] }} lainnya</span></x-ui.tooltip></span>
+                                        <span>{{ $course->instructor?->name ?? '-' }}</span>
                                     </div>
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-calendar-duotone w-3.5 h-3.5 flex-shrink-0"></i>
-                                        <span>{{ $course['day'] }}, {{ $course['start'] }} - {{ $course['end'] }}</span>
+                                        <span>-</span>
                                     </div>
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-users-duotone w-3.5 h-3.5 flex-shrink-0"></i>
-                                        <span>Jumlah peserta: {{ $course['participants'] }} orang</span>
+                                        <span>Jumlah peserta: - orang</span>
                                     </div>
                                 </div>
                                 <div class="px-4 pb-4 pt-3 border-t border-border dark:border-border-dark mt-auto">
-                                    <span class="text-ui-xs text-muted dark:text-muted-dark">Kehadiran: {{ $course['attended'] }} dari {{ $course['total'] }} sesi</span>
+                                    <span class="text-ui-xs text-muted dark:text-muted-dark">Kehadiran: 0 dari 0 sesi</span>
                                 </div>
                             </a>
-                        @endforeach
+                        @empty
+                            <div class="sm:col-span-2 flex flex-col items-center justify-center py-8 text-center">
+                                <i class="za-users-duotone text-5xl opacity-40 block mx-auto mb-3"></i>
+                                <x-ui.text size="sm" color="muted">Belum ada kelas personal</x-ui.text>
+                            </div>
+                        @endforelse
                     </div>
                 </div>
             </div>

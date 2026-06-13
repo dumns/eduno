@@ -19,7 +19,8 @@
             @endif
         </div>
 
-        {{-- Stats --}}
+        {{-- TODO: unhide when episodes/data available --}}
+        {{-- Stats
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
             <div class="bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-2xl p-5 text-center">
                 <x-ui.icon name="book" size="lg" class="text-primary mx-auto mb-2" />
@@ -37,8 +38,10 @@
                 <p class="text-ui-sm text-muted dark:text-muted-dark">Published</p>
             </div>
         </div>
+        --}}
 
-        {{-- About --}}
+        {{-- TODO: unhide when description is filled --}}
+        {{-- About
         @if($course->description)
             <x-ui.card variant="default" padding="lg" class="mb-6">
                 <x-slot:header>
@@ -52,21 +55,25 @@
                 </div>
             </x-ui.card>
         @endif
+        --}}
 
-        {{-- CTA --}}
+        {{-- TODO: unhide when episodes available --}}
+        {{-- CTA
         <div class="mb-6">
-            <x-ui.button 
-                href="{{ route('courses.episodes.show', ['course' => $course]) }}" 
-                size="lg" 
-                icon="play" 
-                icon-position="right" 
+            <x-ui.button
+                href="{{ route('courses.episodes.show', ['course' => $course]) }}"
+                size="lg"
+                icon="play"
+                icon-position="right"
                 class="w-full justify-center"
             >
                 {{ auth()->user()?->courses->contains($course) ? 'Continue Watching' : 'Start Watching' }}
             </x-ui.button>
         </div>
+        --}}
 
-        {{-- Episodes --}}
+        {{-- TODO: unhide when episodes available --}}
+        {{-- Episodes
         <x-ui.card variant="default" padding="none" class="mb-6 overflow-hidden">
             <x-slot:header>
                 <div class="flex items-center gap-2 px-6 pt-6 pb-0">
@@ -77,7 +84,7 @@
             </x-slot:header>
             <div class="divide-y divide-border dark:divide-border-dark">
                 @forelse($course->episodes as $episode)
-                    <a href="{{ route('courses.episodes.show', ['course' => $course, 'episode' => $episode]) }}" 
+                    <a href="{{ route('courses.episodes.show', ['course' => $course, 'episode' => $episode]) }}"
                        class="flex items-center gap-4 px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
                         <div class="flex-shrink-0 w-9 h-9 rounded-ui-xl bg-primary/10 dark:bg-primary-dark/30 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                             <x-ui.icon name="play" size="sm" class="text-primary" />
@@ -98,6 +105,7 @@
                 @endforelse
             </div>
         </x-ui.card>
+        --}}
 
         {{-- Quizzes --}}
         @if($course->quizzes->count() > 0)
@@ -111,7 +119,7 @@
                 </x-slot:header>
                 <div class="divide-y divide-border dark:divide-border-dark">
                     @foreach($course->quizzes as $quiz)
-                        <a href="{{ route('quiz.student', ['quiz' => $quiz]) }}" 
+                        <a href="{{ route('quiz.student', ['quiz' => $quiz]) }}"
                            class="flex items-center gap-4 px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
                             <div class="flex-shrink-0 w-9 h-9 rounded-ui-xl bg-warning/10 dark:bg-warning/20 flex items-center justify-center group-hover:bg-warning/20 transition-colors">
                                 <x-ui.icon name="check-circle" size="sm" class="text-warning" />
