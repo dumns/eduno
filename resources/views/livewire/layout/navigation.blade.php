@@ -11,10 +11,11 @@ new class extends Component {
     }
 }; ?>
 
-<header class="sticky top-0 z-50 bg-white dark:bg-surface-dark border-b border-border dark:border-border-dark">
+<header x-data="{ mobileOpen: false }" class="sticky top-0 z-50 bg-white dark:bg-surface-dark border-b border-border dark:border-border-dark">
     <div class="flex items-center h-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center gap-2.5 flex-shrink-0">
-            <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center">
+            <a href="{{ route('dashboard') }}"
+               @click="if (window.innerWidth < 768) { $event.preventDefault(); mobileOpen = !mobileOpen; } else { window.location.href = '{{ route('dashboard') }}'; }" class="flex items-center">
                 <x-application-logo class="h-9 w-auto" />
             </a>
         </div>
@@ -112,13 +113,7 @@ new class extends Component {
                 <x-ui.button href="{{ route('register') }}" size="sm">Daftar</x-ui.button>
             @endguest
 
-            <div x-data="{ mobileOpen: false }" class="md:hidden relative">
-                <button @click="mobileOpen = !mobileOpen" type="button"
-                    class="p-2 rounded-ui-xl text-muted dark:text-muted-dark hover:text-primary dark:hover:text-primary-light hover:bg-primary/10 dark:hover:bg-primary-dark/20 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all duration-150">
-                    <i class="za-menu-bars h-6 w-6" :class="{'hidden': mobileOpen, 'inline-flex': !mobileOpen}"></i>
-                    <i class="za-xmark h-6 w-6" :class="{'hidden': !mobileOpen, 'inline-flex': mobileOpen}"></i>
-                </button>
-                <div x-show="mobileOpen" x-cloak
+            <div x-show="mobileOpen" x-cloak
                     x-transition:enter="transition-all duration-200 ease-out"
                     x-transition:enter-start="opacity-0 scale-95"
                     x-transition:enter-end="opacity-100 scale-100"
@@ -154,23 +149,9 @@ new class extends Component {
                             Jelajah
                         </a>
                         @auth
-                            <div class="border-t border-border dark:border-border-dark my-2 mx-4"></div>
-                            <a href="{{ route('profile') }}" wire:navigate
-                                class="flex items-center gap-3 px-4 py-2.5 text-ui-sm font-medium text-muted dark:text-muted-dark hover:text-foreground dark:hover:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 rounded-ui-lg mx-2 transition-all duration-150"
-                                @click="mobileOpen = false">
-                                <x-ui.icon name="user" size="sm" class="text-muted dark:text-muted-dark" />
-                                Pengaturan Akun
-                            </a>
-                            <button wire:click="logout"
-                                class="flex items-center gap-3 w-full px-4 py-2.5 text-ui-sm font-medium text-danger hover:bg-danger-light dark:hover:bg-danger/20 rounded-ui-lg mx-2 transition-all duration-150"
-                                style="width: calc(100% - 1rem);">
-                                <x-ui.icon name="arrow-right" size="sm" />
-                                Keluar
-                            </button>
                         @endauth
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 </header>
