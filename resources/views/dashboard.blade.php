@@ -141,36 +141,52 @@
                 {{-- ============================================================ --}}
                 {{-- COURSES TAB CONTENT                                          --}}
                 {{-- ============================================================ --}}
-                <div x-show="tab === 'courses'" class="p-5 sm:p-6">
+                <div x-show="tab === 'courses'" class="p-5 sm:p-6"
+                    x-data="{
+                        search: '',
+                        selectedYear: 'Semua',
+                        courses: {{ $coursesJson }},
+                        get years() {
+                            return ['Semua', ...new Set(this.courses.map(c => c.year))].sort();
+                        },
+                        get filteredCourses() {
+                            return this.courses.filter(c => {
+                                const q = this.search.toLowerCase();
+                                const matchSearch = !q || c.title.toLowerCase().includes(q) || c.code.toLowerCase().includes(q) || c.instructor_name.toLowerCase().includes(q);
+                                const matchYear = this.selectedYear === 'Semua' || c.year == this.selectedYear;
+                                return matchSearch && matchYear;
+                            });
+                        }
+                    }">
                     <div class="flex items-center justify-between mb-4">
                         <div>
                             <x-ui.heading level="h3" size="lg">Courses</x-ui.heading>
-                            <x-ui.text size="sm" color="muted">Anda memiliki {{ $courses->count() }} kelas pada tahun ini</x-ui.text>
+                            <x-ui.text size="sm" color="muted" x-text="'Anda memiliki ' + filteredCourses.length + ' kelas'"></x-ui.text>
                         </div>
                     </div>
 
                     {{-- Search + Year Filter --}}
                     <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 mb-5">
                         <div class="sm:col-span-8">
-                            <div class="relative" x-data>
+                            <div class="relative">
                                 <x-ui.icon name="search" size="sm" class="absolute left-3 top-1/2 -translate-y-1/2 text-muted dark:text-muted-dark pointer-events-none" />
-                                <input type="text" placeholder="Cari berdasarkan nama kelas, kode kelas, atau nama pengajar"
+                                <input type="text" x-model="search" placeholder="Cari berdasarkan nama kelas, kode kelas, atau nama pengajar"
                                     class="block w-full pl-10 pr-3 py-2.5 text-ui-sm bg-gray-100 dark:bg-gray-800 border-none rounded-ui-xl placeholder-muted dark:placeholder-muted-dark text-foreground dark:text-foreground-dark focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all duration-150">
                             </div>
                         </div>
                         <div class="sm:col-span-4">
-                            <div x-data="{ open: false, selected: '2026' }" class="relative">
+                            <div x-data="{ open: false }" class="relative">
                                 <button @click="open = !open" type="button"
                                     class="flex items-center justify-between gap-2 w-full px-4 py-2.5 text-ui-sm bg-gray-100 dark:bg-gray-800 rounded-ui-xl text-foreground dark:text-foreground-dark focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all">
-                                    <span x-text="selected"></span>
+                                    <span x-text="selectedYear"></span>
                                     <x-ui.icon name="chevron-down" size="xs" class="text-muted dark:text-muted-dark flex-shrink-0" />
                                 </button>
                                 <div x-show="open" @click.outside="open = false"
                                     class="absolute right-0 top-full mt-1 w-full bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl shadow-ui-lg z-20 py-1" style="display: none;">
-                                    <template x-for="year in ['2026', '2025', '2024']" :key="year">
-                                        <button @click="selected = year; open = false" type="button"
+                                    <template x-for="year in years" :key="year">
+                                        <button @click="selectedYear = year; open = false" type="button"
                                             class="block w-full text-left px-4 py-2 text-ui-sm text-foreground dark:text-foreground-dark hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                                            :class="selected === year ? 'font-semibold text-primary' : ''"
+                                            :class="selectedYear === year ? 'font-semibold text-primary' : ''"
                                             x-text="year"></button>
                                     </template>
                                 </div>
@@ -180,15 +196,15 @@
 
                     {{-- Course Cards (2-column grid) --}}
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        @forelse ($courses as $course)
+                        <template x-for="course in filteredCourses" :key="course.id">
                             <a href="#" class="flex flex-col bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl transition-all duration-200 hover:border-primary/30 hover:shadow-sm h-full">
                                 <div class="p-4 pb-0">
-                                    <p class="text-ui-sm font-semibold text-foreground dark:text-foreground-dark hover:text-primary transition-colors leading-snug">{{ $course->title }} ({{ $course->code ?? '-' }})</p>
+                                    <p class="text-ui-sm font-semibold text-foreground dark:text-foreground-dark hover:text-primary transition-colors leading-snug" x-text="course.title + ' (' + course.code + ')'"></p>
                                 </div>
                                 <div class="p-4 space-y-2.5 flex-1">
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-user-duotone w-3.5 h-3.5 flex-shrink-0"></i>
-                                        <span>{{ $course->instructor?->name ?? '-' }}</span>
+                                        <span x-text="'Dosen ' + course.instructor_name"></span>
                                     </div>
                                     <div class="flex items-center gap-2 text-ui-xs text-muted dark:text-muted-dark">
                                         <i class="za-calendar-duotone w-3.5 h-3.5 flex-shrink-0"></i>
@@ -199,12 +215,13 @@
                                     <span class="text-ui-xs text-muted dark:text-muted-dark">Kehadiran: 0 dari 0 sesi</span>
                                 </div>
                             </a>
-                        @empty
+                        </template>
+                        <template x-if="filteredCourses.length === 0">
                             <div class="sm:col-span-2 flex flex-col items-center justify-center py-8 text-center">
                                 <i class="za-book-duotone text-5xl opacity-40 block mx-auto mb-3"></i>
-                                <x-ui.text size="sm" color="muted">Belum ada course yang tersedia</x-ui.text>
+                                <p class="text-ui-sm text-muted dark:text-muted-dark">Tidak ada course yang cocok</p>
                             </div>
-                        @endforelse
+                        </template>
                     </div>
                 </div>
 

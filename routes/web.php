@@ -43,7 +43,17 @@ Route::redirect('/', '/login');
 Route::get('dashboard', function () {
     $courses = Course::with('instructor')->get();
     $personalCourses = auth()->user()->courses()->with('instructor')->get();
-    return view('dashboard', compact('courses', 'personalCourses'));
+
+    $courseYears = $courses->pluck('created_at')->map(fn ($d) => $d->year)->unique()->sort()->values()->toArray();
+    $coursesJson = $courses->map(fn ($c) => [
+        'id' => $c->id,
+        'title' => $c->title,
+        'code' => $c->code ?? '-',
+        'instructor_name' => $c->instructor?->name ?? '-',
+        'year' => $c->created_at->year,
+    ])->toJson();
+
+    return view('dashboard', compact('courses', 'personalCourses', 'courseYears', 'coursesJson'));
 })
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
