@@ -8,6 +8,7 @@ use App\Livewire\ShowCourse;
 use App\Livewire\StudentQuiz;
 use App\Livewire\StudentQuizForm;
 use App\Livewire\WatchEpisode;
+use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,7 +40,11 @@ Route::get('/quiz/{quiz}', StudentQuizForm::class)->middleware(['auth'])->name('
 
 Route::redirect('/', '/login');
 
-Route::view('dashboard', 'dashboard')
+Route::get('dashboard', function () {
+    $courses = Course::with('instructor')->get();
+    $personalCourses = auth()->user()->courses()->with('instructor')->get();
+    return view('dashboard', compact('courses', 'personalCourses'));
+})
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 

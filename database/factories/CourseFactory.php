@@ -19,7 +19,9 @@ class CourseFactory extends Factory
         return [
             'title' => fake()->sentence(),
             'tagline' => fake()->sentence(),
-            'description' => fake()->sentence()
+            'description' => fake()->sentence(),
+            'instructor_id' => \App\Models\User::factory(),
+            'code' => strtoupper(fake()->bothify('????##')),
         ];
     }
 }
