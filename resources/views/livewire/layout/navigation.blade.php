@@ -14,8 +14,8 @@ new class extends Component {
 <header x-data="{ mobileOpen: false }" class="sticky top-0 z-50 bg-white dark:bg-surface-dark border-b border-border dark:border-border-dark">
     <div class="flex items-center h-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center gap-2.5 flex-shrink-0">
-            <a href="{{ route('dashboard') }}" wire:navigate
-               @click="if (window.innerWidth < 768) { $event.preventDefault(); mobileOpen = !mobileOpen; }" class="flex items-center">
+            <a href="{{ route('dashboard') }}"
+               @click="if (window.innerWidth < 768) { $event.preventDefault(); mobileOpen = !mobileOpen; } else { window.location.href = '{{ route('dashboard') }}'; }" class="flex items-center">
                 <x-application-logo class="h-9 w-auto" />
             </a>
         </div>

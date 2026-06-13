@@ -19,7 +19,8 @@
         <div class="min-h-screen flex flex-col items-center justify-center px-4 py-8">
             <div class="w-full max-w-md">
                 <div class="flex justify-center mb-8">
-                    <a href="/" wire:navigate>
+                    <a href="/"
+                       @click="if (window.innerWidth < 768) $event.preventDefault()">
                         <x-application-logo class="h-10 w-auto" />
                     </a>
                 </div>
