@@ -13,7 +13,7 @@
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-0 pb-10 sm:pb-14">
             <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
                 <div class="flex-1 min-w-0">
-                    <div class="flex flex-wrap items-center gap-2 mb-3">
+                    <!-- <div class="flex flex-wrap items-center gap-2 mb-3">
                         <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white backdrop-blur-sm border border-white/10">
                                 <i class="za-book-duotone w-3 h-3"></i>
                             Workshop Pemanfaatan Claude Design
@@ -22,7 +22,7 @@
                             <i class="za-copy-duotone w-3 h-3"></i>
                             PD07
                         </span>
-                    </div>
+                    </div> -->
                     <h1 class="text-3xl sm:text-4xl font-bold text-white leading-tight mb-2 drop-shadow-sm">Workshop Pemanfaatan Claude Design (PD07)</h1>
                     <p class="text-base sm:text-lg text-white/80 max-w-2xl">Pelajari cara memanfaatkan Claude AI untuk desain produk digital secara praktis dan interaktif.</p>
                     <div class="flex flex-wrap gap-x-8 gap-y-2.5 mt-7">
