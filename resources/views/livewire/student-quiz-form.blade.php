@@ -100,7 +100,7 @@
                     {{-- Question --}}
                     @php $question = $questions[$current] ?? null; @endphp
                     @if($question)
-                        <div class="mb-6">
+                        <div class="mb-6" wire:key="quiz-question-{{ $question['id'] }}">
                             <div class="p-5 bg-primary-light/10 dark:bg-primary-dark/20 border border-primary/20 dark:border-primary-dark/30 rounded-ui-xl mb-6">
                                 <x-ui.text size="base" weight="semibold" class="text-foreground dark:text-foreground-dark leading-relaxed">
                                     {!! nl2br(e($question['question'])) !!}
@@ -110,11 +110,11 @@
                             @if($question['type'] === 'multiple_choice')
                                 <div class="space-y-3">
                                     @foreach($question['options'] as $opt)
-                                        <label class="flex items-center p-4 bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl cursor-pointer hover:border-primary hover:bg-primary-light/5 dark:hover:bg-primary-dark/10 transition-all duration-150 group 
+                                        <label wire:key="quiz-option-{{ $question['id'] }}-{{ $opt['id'] }}" class="flex items-center p-4 bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-xl cursor-pointer hover:border-primary hover:bg-primary-light/5 dark:hover:bg-primary-dark/10 transition-all duration-150 group
                                             {{ isset($answers['q_' . $question['id']]) && $answers['q_' . $question['id']] == $opt['id'] ? 'border-primary bg-primary-light/10 dark:bg-primary-dark/20 ring-1 ring-primary' : '' }}">
-                                            <input type="radio" 
-                                                name="q_{{ $question['id'] }}" 
-                                                value="{{ $opt['id'] }}" 
+                                            <input type="radio"
+                                                name="q_{{ $question['id'] }}"
+                                                value="{{ $opt['id'] }}"
                                                 wire:model.live="answers.q_{{ $question['id'] }}"
                                                 class="h-4 w-4 border-border dark:border-border-dark text-primary focus:ring-primary transition-all duration-150">
                                             <span class="ml-3 text-ui-sm text-foreground dark:text-foreground-dark font-medium group-hover:text-primary transition-colors">
@@ -125,6 +125,7 @@
                                 </div>
                             @elseif($question['type'] === 'essay')
                                 <textarea
+                                    wire:key="quiz-essay-{{ $question['id'] }}"
                                     wire:model.blur="answers.q_{{ $question['id'] }}"
                                     placeholder="Type your answer here..."
                                     class="block w-full rounded-ui-xl border border-border dark:border-border-dark bg-white dark:bg-surface-dark text-foreground dark:text-foreground-dark placeholder-muted dark:placeholder-muted-dark px-4 py-3 text-ui-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-150 min-h-[120px]"
