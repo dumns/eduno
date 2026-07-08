@@ -3,8 +3,11 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\QuizResultResource\Pages;
+use App\Models\QuizAnswer;
+use App\Models\QuizAttempt;
 use App\Models\QuizResult;
 use Filament\Forms;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -37,6 +40,30 @@ class QuizResultResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
+                Tables\Actions\Action::make('reset')
+                    ->label('Reset')
+                    ->icon('heroicon-o-arrow-path')
+                    ->color('warning')
+                    ->requiresConfirmation()
+                    ->modalHeading('Reset Percobaan Quiz')
+                    ->modalDescription('Jawaban dan hasil user ini akan dihapus sehingga user dapat mengerjakan ulang quiz dari awal dengan waktu penuh (timer tidak dikurangi).')
+                    ->action(function (QuizResult $record) {
+                        QuizAnswer::where('quiz_id', $record->quiz_id)
+                            ->where('user_id', $record->user_id)
+                            ->delete();
+
+                        QuizAttempt::where('quiz_id', $record->quiz_id)
+                            ->where('user_id', $record->user_id)
+                            ->delete();
+
+                        $record->delete();
+
+                        Notification::make()
+                            ->title('Percobaan quiz berhasil direset')
+                            ->success()
+                            ->send();
+                    }),
+                Tables\Actions\DeleteAction::make(),
             ]);
     }
 
