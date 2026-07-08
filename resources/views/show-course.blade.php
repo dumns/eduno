@@ -14,14 +14,14 @@
                 </svg>
             </div>
             <div class="relative py-8 sm:py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-                <div class="flex flex-wrap items-center gap-2 mb-3">
+                <!-- <div class="flex flex-wrap items-center gap-2 mb-3">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white backdrop-blur-sm border border-white/10">
                         Workshop Pemanfaatan Claude Design
                     </span>
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white backdrop-blur-sm border border-white/10">
                         PD07
                     </span>
-                </div>
+                </div> -->
                 <h1 class="text-2xl sm:text-3xl font-bold text-white leading-tight mb-2">Workshop Pemanfaatan Claude Design (PD07)</h1>
                 <p class="text-sm sm:text-base text-white/80 max-w-2xl">Pelajari cara memanfaatkan Claude AI untuk desain produk digital secara praktis dan interaktif.</p>
                 <div class="flex flex-wrap gap-x-6 gap-y-2 mt-6">
