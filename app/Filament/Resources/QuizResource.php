@@ -47,6 +47,10 @@ class QuizResource extends Resource
                     ->minValue(1)
                     ->required(fn (Forms\Get $get) => $get('timer_enabled'))
                     ->visible(fn (Forms\Get $get) => $get('timer_enabled')),
+                Forms\Components\Toggle::make('show_result')
+                    ->label('User dapat melihat nilai hasil pengerjaan')
+                    ->helperText('Jika aktif, skor akan ditampilkan ke user setelah quiz disubmit.')
+                    ->default(false),
             ]);
     }
 
