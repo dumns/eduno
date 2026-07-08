@@ -21,6 +21,21 @@ class QuizzesRelationManager extends RelationManager
         return $form
             ->schema([
                 TextInput::make('title')->required(),
+                Toggle::make('allow_multiple_attempts')
+                    ->label('User dapat mengisi quiz berkali-kali')
+                    ->helperText('Jika nonaktif, user hanya bisa mengisi quiz satu kali.')
+                    ->default(false),
+                Toggle::make('timer_enabled')
+                    ->label('Aktifkan Timer')
+                    ->helperText('Jika aktif, user harus menyelesaikan quiz dalam batas waktu yang ditentukan.')
+                    ->default(false)
+                    ->live(),
+                TextInput::make('duration_minutes')
+                    ->label('Durasi Pengerjaan (menit)')
+                    ->numeric()
+                    ->minValue(1)
+                    ->required(fn ($get) => $get('timer_enabled'))
+                    ->visible(fn ($get) => $get('timer_enabled')),
                 Repeater::make('questions')
                     ->relationship()
                     ->schema([

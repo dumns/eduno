@@ -36,6 +36,17 @@ class QuizResource extends Resource
                     ->label('User dapat mengisi quiz berkali-kali')
                     ->helperText('Jika nonaktif, user hanya bisa mengisi quiz satu kali.')
                     ->default(false),
+                Forms\Components\Toggle::make('timer_enabled')
+                    ->label('Aktifkan Timer')
+                    ->helperText('Jika aktif, user harus menyelesaikan quiz dalam batas waktu yang ditentukan.')
+                    ->default(false)
+                    ->live(),
+                Forms\Components\TextInput::make('duration_minutes')
+                    ->label('Durasi Pengerjaan (menit)')
+                    ->numeric()
+                    ->minValue(1)
+                    ->required(fn (Forms\Get $get) => $get('timer_enabled'))
+                    ->visible(fn (Forms\Get $get) => $get('timer_enabled')),
             ]);
     }
 

@@ -13,6 +13,14 @@ class Quiz extends Model
         'course_id',
         'title',
         'allow_multiple_attempts',
+        'timer_enabled',
+        'duration_minutes',
+    ];
+
+    protected $casts = [
+        'allow_multiple_attempts' => 'boolean',
+        'timer_enabled' => 'boolean',
+        'duration_minutes' => 'integer',
     ];
 
     public function course()
@@ -23,5 +31,10 @@ class Quiz extends Model
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    public function attempts()
+    {
+        return $this->hasMany(QuizAttempt::class);
     }
 }

@@ -26,9 +26,41 @@
                                 {{ count($questions) }} questions
                             </x-ui.text>
                         </div>
-                        @if(!$quiz->allow_multiple_attempts)
-                            <x-ui.badge variant="warning" size="sm" dot>Single Attempt</x-ui.badge>
-                        @endif
+                        <div class="flex items-center gap-3">
+                            @if($timerEnabled)
+                                <div
+                                    x-data="{
+                                        remaining: 0,
+                                        expiresAt: new Date('{{ $timerExpiresAt }}').getTime(),
+                                        interval: null,
+                                        tick() {
+                                            this.remaining = Math.max(0, Math.round((this.expiresAt - Date.now()) / 1000));
+                                            if (this.remaining <= 0) {
+                                                clearInterval(this.interval);
+                                                $wire.call('submitQuiz');
+                                            }
+                                        },
+                                        init() {
+                                            this.tick();
+                                            this.interval = setInterval(() => this.tick(), 1000);
+                                        }
+                                    }"
+                                    x-init="init"
+                                    x-cloak
+                                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-ui-lg bg-white dark:bg-surface-dark border border-border dark:border-border-dark"
+                                    :class="remaining <= 60 ? 'border-danger text-danger' : 'text-foreground dark:text-foreground-dark'"
+                                >
+                                    <x-ui.icon name="clock" size="sm" />
+                                    <span
+                                        class="text-ui-sm font-semibold tabular-nums"
+                                        x-text="String(Math.floor(remaining / 60)).padStart(2, '0') + ':' + String(remaining % 60).padStart(2, '0')"
+                                    ></span>
+                                </div>
+                            @endif
+                            @if(!$quiz->allow_multiple_attempts)
+                                <x-ui.badge variant="warning" size="sm" dot>Single Attempt</x-ui.badge>
+                            @endif
+                        </div>
                     </div>
                 </div>
 
