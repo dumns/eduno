@@ -28,7 +28,6 @@
         {{-- ============================================================ --}}
         <div class="lg:col-span-4 space-y-6">
             {{-- JADWAL MINGGU INI --}}
-            {{--
             <div x-data="{ selectedDay: {{ $defaultDay }} }" class="bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-2xl overflow-hidden">
                 <div class="p-5 sm:p-6">
                     <div class="flex items-center justify-between mb-4">
@@ -95,7 +94,6 @@
                     </div>
                 </div>
             </div>
-            --}}
 
             {{-- PERLU DIKERJAKAN --}}
             <div class="bg-white dark:bg-surface-dark border border-border dark:border-border-dark rounded-ui-2xl overflow-hidden">
