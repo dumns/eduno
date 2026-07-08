@@ -110,13 +110,9 @@
                                 title="Soal {{ $i + 1 }}{{ $answered ? ' - sudah dijawab' : ' - belum dijawab' }}"
                                 class="relative w-9 h-9 rounded-ui-lg text-ui-xs font-semibold transition-all duration-150 flex items-center justify-center hover:scale-105
                                 {{ $i === $current ? 'bg-primary text-white shadow-sm ring-2 ring-primary/30 ring-offset-1 ring-offset-white dark:ring-offset-surface-dark scale-105' : '' }}
-                                {{ $i !== $current && $answered ? 'bg-success/15 text-success border border-success/30 hover:bg-success/25' : '' }}
+                                {{ $i !== $current && $answered ? 'bg-success text-white shadow-sm hover:bg-success-hover' : '' }}
                                 {{ $i !== $current && !$answered ? 'bg-gray-100 dark:bg-gray-800 text-muted dark:text-muted-dark border border-border dark:border-border-dark hover:bg-gray-200 dark:hover:bg-gray-700' : '' }}">
-                                @if($i !== $current && $answered)
-                                    <x-ui.icon name="check" size="xs" />
-                                @else
-                                    {{ $i + 1 }}
-                                @endif
+                                {{ $i + 1 }}
                             </button>
                         @endforeach
                     </div>
@@ -159,6 +155,8 @@
                                                 name="q_{{ $question['id'] }}"
                                                 value="{{ $opt['id'] }}"
                                                 wire:model.live="answers.q_{{ $question['id'] }}"
+                                                x-on:mousedown="$el._wasChecked = $el.checked"
+                                                x-on:click="if ($el._wasChecked) { $event.preventDefault(); $el.checked = false; $wire.call('clearAnswer'); }"
                                                 class="h-4 w-4 border-border dark:border-border-dark text-primary focus:ring-primary transition-all duration-150">
                                             <span class="ml-3 text-ui-sm text-foreground dark:text-foreground-dark font-medium group-hover:text-primary transition-colors">
                                                 {{ $opt['option'] }}
@@ -166,6 +164,9 @@
                                         </label>
                                     @endforeach
                                 </div>
+                                <x-ui.text size="xs" color="muted" class="mt-2">
+                                    Klik pilihan yang sudah dipilih sekali lagi untuk membatalkan jawaban.
+                                </x-ui.text>
                             @elseif($question['type'] === 'essay')
                                 <textarea
                                     wire:key="quiz-essay-{{ $question['id'] }}"

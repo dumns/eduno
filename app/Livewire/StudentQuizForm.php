@@ -104,6 +104,25 @@ class StudentQuizForm extends Component
         ]);
     }
 
+    public function clearAnswer(): void
+    {
+        if (!Auth::check()) return;
+        if ($this->isTimeExpired()) {
+            $this->submitQuiz();
+            return;
+        }
+
+        $question = $this->questions[$this->current] ?? null;
+        if (!$question) return;
+
+        unset($this->answers['q_' . $question['id']]);
+
+        QuizAnswer::where('quiz_id', $this->quiz->id)
+            ->where('user_id', Auth::id())
+            ->where('question_id', $question['id'])
+            ->delete();
+    }
+
     public function next(): void
     {
         if ($this->current < count($this->questions) - 1) {
