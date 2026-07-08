@@ -45,6 +45,10 @@ class QuizzesRelationManager extends RelationManager
                     ->minValue(1)
                     ->required(fn ($get) => $get('timer_enabled'))
                     ->visible(fn ($get) => $get('timer_enabled')),
+                Toggle::make('show_result')
+                    ->label('User dapat melihat nilai hasil pengerjaan')
+                    ->helperText('Jika aktif, skor akan ditampilkan ke user setelah quiz disubmit.')
+                    ->default(false),
                 Actions::make([
                     Action::make('download_template')
                         ->label('Download Template CSV')

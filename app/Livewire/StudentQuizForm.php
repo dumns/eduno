@@ -18,6 +18,8 @@ class StudentQuizForm extends Component
     public bool $submitted = false;
     public bool $timerEnabled = false;
     public ?string $timerExpiresAt = null;
+    public bool $confirmingSubmit = false;
+    public ?array $result = null;
 
     public function mount(Quiz $quiz): void
     {
@@ -33,6 +35,11 @@ class StudentQuizForm extends Component
 
         if (!$quiz->allow_multiple_attempts && $alreadySubmitted) {
             $this->submitted = true;
+
+            if ($quiz->show_result) {
+                $this->loadResult($userId);
+            }
+
             return;
         }
 
@@ -179,7 +186,30 @@ class StudentQuizForm extends Component
                 ->update(['submitted_at' => now()]);
         }
 
+        if ($this->quiz->show_result) {
+            $this->result = [
+                'score' => $score,
+                'max_score' => $maxScore,
+                'percentage' => $percentage,
+            ];
+        }
+
         $this->submitted = true;
+    }
+
+    private function loadResult(int $userId): void
+    {
+        $result = QuizResult::where('quiz_id', $this->quiz->id)
+            ->where('user_id', $userId)
+            ->first();
+
+        if ($result) {
+            $this->result = [
+                'score' => $result->score,
+                'max_score' => $result->max_score,
+                'percentage' => $result->percentage,
+            ];
+        }
     }
 
     public function render()

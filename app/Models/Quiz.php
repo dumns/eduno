@@ -15,12 +15,14 @@ class Quiz extends Model
         'allow_multiple_attempts',
         'timer_enabled',
         'duration_minutes',
+        'show_result',
     ];
 
     protected $casts = [
         'allow_multiple_attempts' => 'boolean',
         'timer_enabled' => 'boolean',
         'duration_minutes' => 'integer',
+        'show_result' => 'boolean',
     ];
 
     public function course()
