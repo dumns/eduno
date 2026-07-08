@@ -58,6 +58,7 @@ class QuizzesRelationManager extends RelationManager
                             ->visible(fn($get) => $get('type') === 'multiple_choice'),
                     ])
                     ->label('Daftar Soal')
+                    ->itemLabel(fn (array $state): ?string => $state['question'] ?? null)
                     ->collapsible()
                     ->orderable()
             ]);
