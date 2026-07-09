@@ -7,6 +7,7 @@ use Livewire\Volt\Component;
 new class extends Component
 {
     public string $password = '';
+    public bool $confirmingUserDeletion = false;
 
     public function deleteUser(Logout $logout): void
     {
@@ -32,7 +33,7 @@ new class extends Component
         Delete Account
     </x-ui.button>
 
-    <x-ui.modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" title="Confirm Account Deletion">
+    <x-ui.modal name="confirm-user-deletion" wire:model="confirmingUserDeletion" title="Confirm Account Deletion">
         <x-ui.text size="sm" color="muted" class="mb-4">
             Are you sure you want to delete your account? Please enter your password to confirm.
         </x-ui.text>
